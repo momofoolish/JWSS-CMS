@@ -1,0 +1,52 @@
+.col-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lv-icon {
+    font-weight: 400;
+    color: red;
+    font-size: 18px;
+}
+
+body {
+    position: relative;
+}
+
+.index-overflow-hidden {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+a {
+    color: #FDAA8C;
+}
+
+a:active {
+    color: hotpink;
+}
+
+a:hover {
+    color: lightpink;
+}
+
+.sister-name-color {
+    color: #FDAA8C;
+}
+
+.avatar {
+    width: 65px;
+    border-radius: 65px;
+}
+
+.sister-card {
+    width: 210px;
+    max-height: 233px;
+}
+
+.font-align {
+    font-family: 'Helvetica Neue';
+}

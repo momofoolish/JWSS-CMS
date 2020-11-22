@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwss.blog.mapper.misaka.SisterMapper">
+    <resultMap id="sisterMap" type="com.jwss.blog.entity.misaka.Sister">
+        <result property="mid" column="mid"/>
+        <result property="name" column="name"/>
+        <result property="face" column="face"/>
+        <result property="sign" column="sign"/>
+        <result property="level" column="level"/>
+        <result property="fans" column="fans"/>
+    </resultMap>
+
+    <select id="selectListByPage" resultMap="sisterMap">
+        select mid,name,face,sign,level,fans from sisters order by name limit #{s},#{t}
+    </select>
+
+    <select id="selectListByKey" resultMap="sisterMap">
+        select mid,name,face,sign,level,fans from sisters
+        where name like '%${key}%'
+        limit 50
+    </select>
+
+    <select id="countSister" resultType="java.lang.Integer">
+        select count(mid) from sisters
+    </select>
+
+    <insert id="insertSister" parameterType="com.jwss.blog.entity.misaka.Sister">
+        INSERT INTO `sisters` VALUES (#{mid}, #{name}, #{face}, #{sign}, #{level}, #{fans}, NULL, NULL, NULL, NULL)
+    </insert>
+</mapper>

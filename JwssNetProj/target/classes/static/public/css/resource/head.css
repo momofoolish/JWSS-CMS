@@ -1,0 +1,38 @@
+ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.jw-head-inRight a, .jw-head-inLeft a {
+    text-decoration: none;
+    color: white;
+    font-family: "Microsoft YaHei UI";
+}
+
+.jw-head-out .jw-head-inLeft a {
+    padding-left: 1em;
+}
+
+.jw-head-out .jw-head-inRight a {
+    padding-right: 1em;
+}
+
+.jw-head-out {
+    height: 54px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FC7FAD;
+    border-radius: 2px;
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+.jw-head-inLeft {
+    display: flex;
+}
+
+.jw-head-inRight {
+    display: flex;
+    align-items: flex-end;
+}

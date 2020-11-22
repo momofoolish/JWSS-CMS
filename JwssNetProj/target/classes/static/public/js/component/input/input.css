@@ -1,0 +1,12 @@
+.com-public-input {
+    caret-color: #FC7FAD;
+    border-radius: 1px;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    border-bottom: 1px solid #FC7FAD;
+    background-color: #fff0;
+    outline-color: rgba(252, 127, 173, 0.438);
+    padding-left: 1em;
+    padding-right: 1em;
+}

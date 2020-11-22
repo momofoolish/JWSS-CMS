@@ -1,0 +1,31 @@
+.view-editor {
+    background-color: #f5f5f5;
+    padding: 3px 6px 0 6px;
+}
+
+.view-editor-form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 0 6px 0;
+}
+
+.view-editor-cover {
+    margin-top: 6px;
+}
+
+.view-editor-cover span {
+    color: gray;
+}
+
+#view-editor-tip {
+    color: #f5222d;
+}
+
+.view-editor-success {
+    color: #FC7FAD;
+    text-align: center;
+}
+
+.view-editor-success span{
+    font-size: 24px;
+}

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwss.blog.mapper.CountMapper">
+
+    <select id="selectCommentTotalByAid" resultType="java.lang.Integer" parameterType="java.lang.Integer">
+        select count(id) from tb_comment
+        where article_id=#{aid}
+    </select>
+
+    <update id="updateArticleLikes" parameterType="java.lang.Integer">
+        update tb_article
+        set likes_number=#{value}
+        where id=#{aid}
+    </update>
+
+    <update id="updateArticleReads" parameterType="java.lang.Integer">
+        update tb_article
+        set reads_number=#{value}
+        where id=#{aid}
+    </update>
+
+    <update id="updateCountComment" parameterType="java.lang.Integer">
+        update tb_article
+        set comment_number=(select count(id) from tb_comment where article_id=#{aid})
+        where id=#{aid}
+    </update>
+</mapper>
