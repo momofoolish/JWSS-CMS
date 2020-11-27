@@ -23,19 +23,23 @@ public class ArticleController {
 
     //文章增删改查之 增
     @PostMapping("/author/add")
-    public Result insert(@RequestParam String title, @RequestParam String description, @RequestParam String label,
-                         @RequestParam String content, @RequestParam("cover") MultipartFile file) {
+    public Result insert(@RequestParam String title, @RequestParam String desc, @RequestParam String content, @RequestParam String sort, @RequestParam String tag, @RequestParam MultipartFile cover) {
         Article article = new Article();
         article.setTitle(title);
-        article.setDescription(description);
-        article.setLabel(label);
+        article.setDescription(desc);
         article.setContent(content);
-        String cover = Sys.fileSave(file,hostConfig);
-        if (!(cover.equals("empty") || cover.equals("error"))) {
-            article.setCover(cover);
-            return new Result(1, articleServiceImpl.insert(article));
+        article.setLabel(tag);
+        article.setCover(Sys.fileSave(cover, hostConfig));
+        if (sort.equals("分类")) {
+            return new Result(0, "失败");
         }
-        return new Result(0, "empty");
+        article.setSortId(Integer.parseInt(sort));
+        int flag = articleServiceImpl.insert(article);
+        if (flag != 0) {
+            return new Result(1, "成功");
+        } else {
+            return new Result(0, "失败");
+        }
     }
 
     //文章增删改查之 删
@@ -47,7 +51,7 @@ public class ArticleController {
     //文章增删改查之 改
     @PostMapping("/author/alt")
     public Result alter(@RequestBody Article article) {
-        return new Result(1,articleServiceImpl.update(article));
+        return new Result(1, articleServiceImpl.update(article));
     }
 
     //文章增删改查之 查

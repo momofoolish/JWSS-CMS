@@ -8,7 +8,9 @@ import java.util.Date;
 @Data
 @TableName("tb_article")
 public class Article {
-    private int id;
+    private String id;
+    private int sortId;     //分类id
+    private int state;      //文章状态，0审核，1通过，-1锁定
     private String authorId;
     private String title;
     private String description;

@@ -1,6 +1,9 @@
 package com.jwss.blog.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jwss.blog.entity.sqldata.ArticleSort;
 import com.jwss.blog.entity.sqldata.Menu;
+import com.jwss.blog.service.article.SortService;
 import com.jwss.blog.service.menu.MenuService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -18,6 +21,8 @@ import java.util.List;
 public class ViewsController {
     @Resource
     MenuService menuService;
+    @Resource
+    SortService sortService;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -59,6 +64,9 @@ public class ViewsController {
     public String editor(Model model) {
         model.addAttribute("baseTitle", "Jwss");
         model.addAttribute("title", "文章编辑中心");
+        IPage<ArticleSort> iPage = (IPage<ArticleSort>) sortService.select(1, 6);
+        model.addAttribute("articleSortList", iPage.getRecords());
+        renderMenu(model);
         return "content/editor";
     }
 

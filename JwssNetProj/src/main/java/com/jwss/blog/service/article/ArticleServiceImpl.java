@@ -5,15 +5,15 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwss.blog.entity.sqldata.Article;
-import com.jwss.blog.entity.sqldata.User;
 import com.jwss.blog.mapper.ArticleMapper;
 import com.jwss.blog.service.BaseService;
 import com.jwss.blog.service.BaseServiceImpl;
-import io.swagger.models.auth.In;
+import com.jwss.blog.util.Sys;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.UUID;
 
 @Service
 public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
@@ -23,11 +23,17 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
     @Override
     public int insert(Object o) {
         Article article = (Article) o;
-        article.setCreateDate(new Date());
-        article.setLikesNumber(0);
-        article.setCommentNumber(0);
-        article.setReadsNumber(1);
-        article.setAuthorId(getUserInfo().getId());
+        article.setId("auu" + Sys.uuid());
+        article.setCreateDate(new Date());  //创建日期
+        article.setLikesNumber(0);  //推荐量
+        article.setCommentNumber(0);//评论量
+        article.setReadsNumber(1);//阅读量
+        article.setState(0);//文章状态
+        String aId = getUserInfo().getId();
+        if (aId.equals("")) {
+            return 0;
+        }
+        article.setAuthorId(aId);//作者ID
         return articleMapper.insert(article);
     }
 
@@ -45,10 +51,10 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
         Article article = (Article) o;
         article.setAlterDate(new Date());
         article.setAuthorId(getUserInfo().getId());
-        UpdateWrapper<Article> updateWrapper=new UpdateWrapper<>();
+        UpdateWrapper<Article> updateWrapper = new UpdateWrapper<>();
         updateWrapper.lambda()
-                .eq(Article::getAuthorId,getUserInfo().getId())
-                .eq(Article::getId,article.getId());
+                .eq(Article::getAuthorId, getUserInfo().getId())
+                .eq(Article::getId, article.getId());
         return articleMapper.update(article, updateWrapper);
     }
 

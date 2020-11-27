@@ -15,7 +15,7 @@ function Upload(props) {
                     props.pre === '' ? '' :
                         (
                             <Fragment>
-                                封面预览: 
+                                封面预览:
                                 <img style={{ width: 200, height: 120, border: '1px solid #FC7FAD' }}
                                     src={URL.createObjectURL(props.pre)} alt="" />
                             </Fragment>
@@ -26,5 +26,3 @@ function Upload(props) {
         </Fragment>
     )
 }
-
-export default Upload;
