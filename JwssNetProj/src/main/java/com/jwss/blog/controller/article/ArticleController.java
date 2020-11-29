@@ -1,15 +1,19 @@
 package com.jwss.blog.controller.article;
 
 import com.jwss.blog.config.HostConfig;
+import com.jwss.blog.constant.RedisKeyType;
 import com.jwss.blog.entity.render.Result;
 import com.jwss.blog.entity.sqldata.Article;
 import com.jwss.blog.service.article.ArticleService;
 import com.jwss.blog.service.article.ArticleServiceImpl;
 import com.jwss.blog.util.Sys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/article")
@@ -20,10 +24,22 @@ public class ArticleController {
     ArticleServiceImpl articleServiceImpl;
     @Resource
     HostConfig hostConfig;
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     //文章增删改查之 增
     @PostMapping("/author/add")
-    public Result insert(@RequestParam String title, @RequestParam String desc, @RequestParam String content, @RequestParam String sort, @RequestParam String tag, @RequestParam MultipartFile cover) {
+    public Result insert(HttpServletRequest request, @RequestParam("title") String title,
+                         @RequestParam("desc") String desc, @RequestParam("content") String content,
+                         @RequestParam("sort") String sort, @RequestParam("tag") String tag,
+                         @RequestParam("cover") MultipartFile cover, @RequestParam("edKey") String edKey) {
+        String myKey = redisTemplate.opsForValue().get(Sys.getClientHost(request) + RedisKeyType.edKey);
+        if (myKey == null || !myKey.equals(edKey)) {
+            return new Result(-1, "请求失败");
+        }
+        if (articleServiceImpl.isExist(title) <= 0) {
+            return new Result(-1, "已存在此文章!!!");
+        }
         Article article = new Article();
         article.setTitle(title);
         article.setDescription(desc);

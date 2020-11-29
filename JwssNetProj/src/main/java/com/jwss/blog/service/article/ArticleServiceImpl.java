@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -66,5 +67,23 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
                 "reads_number", "comment_number");
         queryWrapper.lambda().eq(Article::getAuthorId, getUserInfo().getId());
         return articleMapper.selectPage(iPage, queryWrapper);
+    }
+
+    /**
+     * 通过名称判断文章是否存在
+     *
+     * @param name 文章名称
+     * @return 0&1
+     */
+    public int isExist(String name) {
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("id");
+        queryWrapper.lambda().eq(Article::getTitle, name);
+        List<Article> articleList = articleMapper.selectList(queryWrapper);
+        if (articleList.size() > 0) {
+            return 0;
+        } else {
+            return 1;
+        }
     }
 }

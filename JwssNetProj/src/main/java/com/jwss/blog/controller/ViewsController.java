@@ -1,13 +1,18 @@
 package com.jwss.blog.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.jwss.blog.constant.RedisKeyType;
 import com.jwss.blog.entity.sqldata.ArticleSort;
 import com.jwss.blog.entity.sqldata.Menu;
 import com.jwss.blog.service.article.SortService;
 import com.jwss.blog.service.menu.MenuService;
+import com.jwss.blog.util.MyEncrypt;
+import com.jwss.blog.util.Sys;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,7 +20,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class ViewsController {
@@ -23,6 +30,10 @@ public class ViewsController {
     MenuService menuService;
     @Resource
     SortService sortService;
+    @Resource
+    MyEncrypt myEncrypt;
+    @Autowired
+    StringRedisTemplate redisTemplate;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -61,11 +72,15 @@ public class ViewsController {
     }
 
     @GetMapping("/author/editor")
-    public String editor(Model model) {
+    public String editor(Model model, HttpServletRequest request) {
         model.addAttribute("baseTitle", "Jwss");
         model.addAttribute("title", "文章编辑中心");
         IPage<ArticleSort> iPage = (IPage<ArticleSort>) sortService.select(1, 6);
-        model.addAttribute("articleSortList", iPage.getRecords());
+        model.addAttribute("articleSortList", iPage.getRecords());//分类列表
+        String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);
+        String host = Sys.getClientHost(request);
+        model.addAttribute("encryptConst", edKey);//加密钥匙
+        redisTemplate.opsForValue().set(host + RedisKeyType.edKey, edKey,24, TimeUnit.HOURS);//设置redis缓存
         renderMenu(model);
         return "content/editor";
     }

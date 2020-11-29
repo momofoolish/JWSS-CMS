@@ -4,8 +4,7 @@ window.onload = function () {
     let tag = [];   //标签
 
     //创建文本编辑器
-    const E = window.wangEditor;
-    const editor = new E('#editorDiv');
+    const editor = new wangEditor('#editorDiv');
     editor.config.zIndex = 1;
     editor.config.onchangeTimeout = 500;
     editor.config.onchange = function (html) {
@@ -76,6 +75,7 @@ window.onload = function () {
         }
 
         let formData = new FormData();
+        formData.append("edKey", encryptConst);
         formData.append("sort", $("#selectSort").val());
         formData.append("title", $("#inputTitle").val());
         formData.append("desc", $("#inputDesc").val());
@@ -91,9 +91,9 @@ window.onload = function () {
             success: function (response) {
                 let success = "<span style='color: limegreen;font-size: 28px'>提示</span>";
                 if (response.code === 1) {
-                    jwssAlert(success, "成功提交", "", "确定");
+                    jwssAlert(success, response.content, "", "确定");
                 } else {
-                    jwssAlert("提示：", "提交失败", "", "关闭");
+                    jwssAlert("提示：", response.content, "", "关闭");
                 }
             }
         });

@@ -1,9 +1,10 @@
 <#import '../common/resource.ftl' as macros>
 <#import '../common/component.ftl' as coms>
+<#import '../common/encrypt.ftl' as encr>
 
 <@macros.Base>
-
     <@macros.Head></@macros.Head>
+    <@encr.EncryptConst></@encr.EncryptConst>
     <@macros.Body>
         <@macros.JqueryLabel></@macros.JqueryLabel>
         <script type="text/javascript" src="http://res.vjwss.top/lib/wangEditor-4.5.0/wangEditor.min.js"></script>
@@ -24,6 +25,16 @@
             <label>
                 <textarea id="inputDesc" class="ae-input-Desc" placeholder="内容描述"></textarea>
             </label>
+            
+            <#-- 编辑器 -->
+            <style>
+                .w-e-text-container {
+                    height: 600px !important;
+                }
+            </style>
+            <div id="editorDiv">
+                <p>请输入内容...</p>
+            </div>
 
             <#-- 上传图片 -->
             <div class="upload-img">
@@ -33,9 +44,6 @@
                 </div>
                 <div id="coverPre"></div>
             </div>
-
-            <#-- 编辑器 -->
-            <div id="editorDiv"></div>
 
             <#-- 其他选项  -->
             <div class="other-row" style="margin-top: 1em">
@@ -76,5 +84,5 @@
     <p id="pTit"> 标题 </p>
     <p id="pMsg"> 内容 </p>
     <p id="pTip"> 提示 </p>
-    <button id="pBtn"> 确定 </button>
+    <button id="pBtn"> 确定</button>
 </@coms.Alert>
