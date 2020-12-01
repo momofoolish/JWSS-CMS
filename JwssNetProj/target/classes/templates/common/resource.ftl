@@ -61,6 +61,8 @@
 </#macro>
 
 <#macro JqueryLayui>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script type="text/javascript" src="/public/plus/layui/layui.js"></script>
     <link rel="stylesheet" href="/public/plus/layui/css/layui.css">
 </#macro>
 
