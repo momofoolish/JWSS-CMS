@@ -31,6 +31,8 @@ class ApiShiroFilters {
         filterCDMap.put("/about", "anon");
         filterCDMap.put("/register", "anon");
         filterCDMap.put("/article/detail/**", "anon");
+        //管理员页面授权
+        filterCDMap.put("/jwss/admin/**", "anon");
         //接口过滤
         filterCDMap.put("/api/home", "anon");
         filterCDMap.put("/api/author", "anon");
