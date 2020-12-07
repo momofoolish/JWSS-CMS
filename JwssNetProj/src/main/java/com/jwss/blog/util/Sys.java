@@ -113,6 +113,10 @@ public class Sys {
         response.setContentType("image/jpeg");
     }
 
+    /**
+     * uuid生成器
+     * @return UUID字符串（除去“-”）
+     */
     public static String uuid() {
         String u = UUID.randomUUID().toString();
         String[] us=u.split("-");

@@ -1,8 +1,11 @@
 package com.jwss.blog.service.user;
 
 import java.util.Date;
+import java.util.List;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwss.blog.config.HostConfig;
 import com.jwss.blog.entity.ResultCode;
 import com.jwss.blog.entity.render.Result;
@@ -137,5 +140,19 @@ public class UserService {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("password", "name", "account").like("account", account);
         return userMapper.selectOne(queryWrapper);
+    }
+
+
+    /**
+     * 获取最新用户
+     *
+     * @param total 获取条数
+     * @return 最新用户集合
+     */
+    public List<User> queryUserNewList(int total) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        IPage<User> iPage = new Page<>(0, total);
+        queryWrapper.select("id", "account", "name").orderByDesc("register_date");
+        return userMapper.selectPage(iPage, queryWrapper).getRecords();
     }
 }

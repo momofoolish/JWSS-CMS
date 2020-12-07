@@ -33,6 +33,7 @@ class ApiShiroFilters {
         filterCDMap.put("/article/detail/**", "anon");
         //管理员页面授权
         filterCDMap.put("/jwss/admin/**", "anon");
+        filterCDMap.put("/api/admin/**", "anon");
         //接口过滤
         filterCDMap.put("/api/home", "anon");
         filterCDMap.put("/api/author", "anon");

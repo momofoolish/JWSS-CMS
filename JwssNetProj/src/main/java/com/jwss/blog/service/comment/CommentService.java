@@ -1,6 +1,8 @@
 package com.jwss.blog.service.comment;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jwss.blog.entity.render.Result;
 import com.jwss.blog.entity.sqldata.Comment;
 import com.jwss.blog.entity.sqldata.Feedback;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -55,8 +58,21 @@ public class CommentService {
         return new Result(1, feedbackMapper.insert(feedback));
     }
 
+    /**
+     * 获取最新反馈
+     *
+     * @param total 获取条数
+     * @return 最新反馈集合
+     */
+    public List<Feedback> queryFeedBackList(int total) {
+        QueryWrapper<Feedback> queryWrapper = new QueryWrapper<>();
+        IPage<Feedback> iPage = new Page<>(0, total);
+        queryWrapper.select("id", "content", "create_date").orderByDesc("create_date");
+        return feedbackMapper.selectPage(iPage, queryWrapper).getRecords();
+    }
+
     //获取用户id
-    private String userIdGet(){
+    private String userIdGet() {
         Subject subject = SecurityUtils.getSubject();
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper

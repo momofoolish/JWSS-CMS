@@ -54,24 +54,18 @@
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">所有商品</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
-                    </dl>
+                    <a class="" href="javascript:;">默认首页</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">解决方案</a>
+                    <a href="javascript:;">文章管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a href="javascript:;">管理员操作</a></dd>
+                        <dd><a href="javascript:;">管理员审核</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
+                <li class="layui-nav-item"><a href="">用户管理</a></li>
+                <li class="layui-nav-item"><a href="">访问统计</a></li>
+                <li class="layui-nav-item"><a href="">数据管理</a></li>
             </ul>
         </div>
     </div>
@@ -80,7 +74,7 @@
 <#--主体-->
 <#macro Body>
     <div class="layui-body">
-        <div style="padding: 15px;">内容主体区域</div>
+        <div style="padding: 15px;"><#nested></div>
     </div>
 </#macro>
 

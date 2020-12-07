@@ -86,4 +86,16 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
             return 1;
         }
     }
+
+    /**
+     * 获取最新的文章
+     * @param total 条数
+     * @return 文章集合
+     */
+    public List<Article> selectNewList(int total){
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        IPage<Article> iPage = new Page<>(0, total);
+        queryWrapper.select("id", "title", "author_id", "create_date").orderByDesc("create_date");
+        return articleMapper.selectPage(iPage, queryWrapper).getRecords();
+    }
 }

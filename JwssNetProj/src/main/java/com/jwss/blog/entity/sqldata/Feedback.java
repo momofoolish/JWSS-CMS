@@ -8,7 +8,6 @@ import java.util.Date;
 @Data
 @TableName("tb_feedback")
 public class Feedback {
-
     private int id;
     private String userId;
     private String content;

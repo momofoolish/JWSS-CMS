@@ -1,5 +1,6 @@
 <#import '../common/resource.ftl' as macros>
-<#import 'layout.ftl' as layout>
+<#import './subject/default.ftl' as defa>
+<#import './layout.ftl' as layout>
 
 <#--引入layui框架-->
 <@macros.JqueryLayui></@macros.JqueryLayui>
@@ -8,7 +9,7 @@
 <@layout.Contianer>
     <@layout.Nav></@layout.Nav>
     <@layout.Menu></@layout.Menu>
-    <@layout.Body></@layout.Body>
+    <@layout.Body> <@defa.Index></@defa.Index> </@layout.Body>
     <@layout.Footer></@layout.Footer>
 </@layout.Contianer>
 
