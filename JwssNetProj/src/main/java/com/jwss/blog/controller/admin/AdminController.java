@@ -28,4 +28,11 @@ public class AdminController {
         model.addAttribute("userList", userService.queryUserNewList(8));
         return "admin/index";
     }
+
+    @GetMapping("/article/operation")
+    public String adminArticleOperation(Model model){
+        model.addAttribute("title","文章操作");
+
+        return "admin/articleOperation";
+    }
 }

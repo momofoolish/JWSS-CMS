@@ -54,12 +54,12 @@
         <div class="layui-side-scroll">
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="javascript:;">默认首页</a>
+                    <a class="" href="/jwss/admin/">默认首页</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">文章管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">管理员操作</a></dd>
+                        <dd><a href="/jwss/admin/article/operation">管理员操作</a></dd>
                         <dd><a href="javascript:;">管理员审核</a></dd>
                     </dl>
                 </li>

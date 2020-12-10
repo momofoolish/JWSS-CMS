@@ -12,9 +12,7 @@ import com.jwss.blog.util.Sys;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
@@ -89,13 +87,35 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
 
     /**
      * 获取最新的文章
+     *
      * @param total 条数
      * @return 文章集合
      */
-    public List<Article> selectNewList(int total){
+    public List<Article> selectNewList(int total) {
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
         IPage<Article> iPage = new Page<>(0, total);
         queryWrapper.select("id", "title", "author_id", "create_date").orderByDesc("create_date");
         return articleMapper.selectPage(iPage, queryWrapper).getRecords();
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param index 索引值（开始）
+     * @param total 查询多少条？
+     * @return 文章队列
+     */
+    public Map<String, Object> selectByPage(int index, int total) {
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        IPage<Article> iPage = new Page<>(index, total);
+        queryWrapper.select("id", "title", "description", "label", "author_id", "create_date",
+                "reads_number", "comment_number");
+        Map<String, Object> hashMap = new HashMap<>();
+        IPage<Article> iPageResult = articleMapper.selectPage(iPage, queryWrapper);
+        hashMap.put("data", iPageResult.getRecords());
+        hashMap.put("count", iPageResult.getTotal());
+        hashMap.put("msg", "成功");
+        hashMap.put("code", 0);
+        return hashMap;
     }
 }
