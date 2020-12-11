@@ -118,4 +118,16 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
         hashMap.put("code", 0);
         return hashMap;
     }
+
+    /**
+     * 批量删除
+     * @param map 文章id列表
+     * @return 返回受影响数量
+     */
+    public Integer deleteBatch(Map<String, Object> map){
+        String[] idArray = String.valueOf(map.get("ids")).split(",");
+        List<String> idList = new ArrayList<>();
+        Collections.addAll(idList, idArray);
+        return articleMapper.deleteBatch(idList);
+    }
 }
