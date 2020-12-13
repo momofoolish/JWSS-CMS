@@ -20,17 +20,18 @@ window.onload = function () {
         });
 
         table.on('checkbox(option)', function (obj) {
-            console.log(obj.checked); //当前是否选中状态
-            console.log(obj.data); //选中行的相关数据
-            console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
+            // console.log(obj.checked); //当前是否选中状态
+            // console.log(obj.data); //选中行的相关数据
+            // console.log(obj.type); //如果触发的是全选，则为：all，如果触发的是单选，则为：one
         });
 
         $("#deleteBtn").on('click', function () {
             let checkStatus = table.checkStatus('optionSelects');
-
-            console.log(checkStatus.data) //获取选中行的数据
-            console.log(checkStatus.data.length) //获取选中行数量，可作为是否有选中行的条件
-            console.log(checkStatus.isAll) //表格是否全选
+            let ids = [];
+            checkStatus.data.forEach((item, index) => {
+                ids.push(item.id);
+            });
+            console.log(ids);
         });
 
     });
