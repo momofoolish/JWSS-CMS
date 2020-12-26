@@ -23,13 +23,11 @@ class BlogApplicationTests {
     HostConfig hostConfig;
     @Resource
     ArticleMapper articleMapper;
+    @Resource
+    ArticleServiceImpl articleServiceImpl;
 
     @Test
     void contextLoads() {
-        List<String> ids = new ArrayList<>();
-        ids.add("111");
-        ids.add("222");
-        ids.add("333");
-        articleMapper.deleteBatch(ids);
+
     }
 }

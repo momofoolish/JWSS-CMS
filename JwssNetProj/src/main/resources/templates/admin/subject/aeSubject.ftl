@@ -9,19 +9,17 @@
 
     <div class="layui-row">
         <div class="layui-col-md6">
-            <input type="text" name="title" required lay-verify="required" id="searchInput"
+            <input id="searchInput" type="text" name="title" required lay-verify="required"
                    placeholder="输入搜索" autocomplete="off" class="layui-input">
         </div>
+
         <div class="layui-col-md3">
             <button type="button" style="margin-left: 1px" id="searchBtn"
                     class="layui-btn layui-btn-primary">搜索</button>
-        </div>
-        <div class="layui-col-md3" style="text-align: right">
-            <button id="deleteBtn" type="button" class="layui-btn layui-btn-normal">删除</button>
         </div>
     </div>
 
     <table id="articleAdminTable" lay-filter="option"></table>
 
-    <script src="/public/js/admin/aoSubject.js"></script>
+    <script src="/public/js/admin/aeSubject.js"></script>
 </#macro>

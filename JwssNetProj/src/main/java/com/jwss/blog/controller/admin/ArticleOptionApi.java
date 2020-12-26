@@ -1,6 +1,5 @@
 package com.jwss.blog.controller.admin;
 
-import com.alibaba.fastjson.JSONObject;
 import com.jwss.blog.entity.render.Result;
 import com.jwss.blog.service.article.ArticleServiceImpl;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +16,32 @@ public class ArticleOptionApi {
     //分页查询
     @GetMapping("/article/page")
     public Object articlePage(@RequestParam Map<String, Object> map) {
+        String keyWork = map.get("title") == null ? "" : map.get("title").toString();
         int p = Integer.parseInt((String) map.get("page"));
         int l = Integer.parseInt((String) map.get("limit"));
-        return articleServiceImpl.selectByPage(p, l);
+        return articleServiceImpl.selectByPage(p, l, keyWork);
     }
 
     //批量删除
     @PostMapping("/article/delete/batch")
     public Object articleDelete(@RequestParam Map<String, Object> map) {
         return new Result(1, articleServiceImpl.deleteBatch(map));
+    }
+
+    //分页查询
+    @GetMapping("/article/examineList")
+    public Object examineList(@RequestParam Map<String, Object> map) {
+        String keyWork = map.get("title") == null ? "" : map.get("title").toString();
+        int p = Integer.parseInt((String) map.get("page"));
+        int l = Integer.parseInt((String) map.get("limit"));
+        return articleServiceImpl.selectExamineList(p, l, keyWork);
+    }
+
+    //更新文章状态
+    @PostMapping("/article/updateState")
+    public Object updateState(@RequestParam Map<String, Object> map) {
+        int state = Integer.parseInt((String) map.get("state"));
+        int re = articleServiceImpl.updateArticleState(map.get("aId").toString(), state);
+        return new Result(1, re);
     }
 }

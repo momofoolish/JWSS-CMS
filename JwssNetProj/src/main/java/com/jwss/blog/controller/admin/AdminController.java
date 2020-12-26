@@ -32,7 +32,12 @@ public class AdminController {
     @GetMapping("/article/operation")
     public String adminArticleOperation(Model model){
         model.addAttribute("title","文章操作");
-
         return "admin/articleOperation";
+    }
+
+    @GetMapping("/article/examine")
+    public String adminArticleExamine(Model model){
+        model.addAttribute("title","文章审核列表");
+        return "admin/articleExamine";
     }
 }

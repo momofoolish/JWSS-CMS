@@ -60,7 +60,7 @@
                     <a href="javascript:;">文章管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jwss/admin/article/operation">管理员操作</a></dd>
-                        <dd><a href="javascript:;">管理员审核</a></dd>
+                        <dd><a href="/jwss/admin/article/examine">审核列表</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">用户管理</a></li>

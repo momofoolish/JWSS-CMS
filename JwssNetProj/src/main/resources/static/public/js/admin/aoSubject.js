@@ -1,7 +1,9 @@
+let baseTable = "";
+
 window.onload = function () {
     layui.use('table', function () {
         let table = layui.table;
-        table.render({
+        baseTable = table.render({
             elem: '#articleAdminTable'
             , id: 'optionSelects'
             , height: 312
@@ -34,5 +36,36 @@ window.onload = function () {
             console.log(ids);
         });
 
+    });
+    searchByClick();
+    searchByEnter();
+}
+
+//表格重载
+function tableReload(obj) {
+    baseTable.reload({
+        where: {
+            title: obj.title === undefined ? "" : obj.title,
+        }
+    });
+}
+
+//搜索功能
+function searchByClick() {
+    $("#searchBtn").on('click', function () {
+        let s = $("#searchInput").val();
+        let obj = {};
+        obj.title = s;
+        tableReload(obj);
+    });
+}
+function searchByEnter() {
+    $("#searchInput").on('keydown', function (e) {
+        if(e.keyCode === 13){
+            let s = $("#searchInput").val();
+            let obj = {};
+            obj.title = s;
+            tableReload(obj);
+        }
     });
 }
