@@ -57,13 +57,21 @@
                     <a class="" href="/jwss/admin/">默认首页</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">文章管理</a>
+                    <a href="javascript:">文章管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/jwss/admin/article/operation">管理员操作</a></dd>
                         <dd><a href="/jwss/admin/article/examine">审核列表</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">用户管理</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:">用户管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/jwss/admin/user/operation">网站用户</a></dd>
+                        <dd><a href="/jwss/admin/user/examine">后台管理员</a></dd>
+                        <dd><a href="/jwss/admin/user/examine">角色管理</a></dd>
+                        <dd><a href="/jwss/admin/user/examine">作者申请审核</a></dd>
+                    </dl>
+                </li>
                 <li class="layui-nav-item"><a href="">访问统计</a></li>
                 <li class="layui-nav-item"><a href="">数据管理</a></li>
             </ul>
