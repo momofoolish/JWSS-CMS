@@ -16,10 +16,16 @@ public class UserOptionApi {
     //分页查询用户
     @GetMapping("/user/page")
     public Object userPage(@RequestParam Map<String, Object> map) {
-        String keyWork = map.get("title") == null ? "" : map.get("title").toString();
+        String keyWork = map.get("name") == null ? "" : map.get("name").toString();
         int p = Integer.parseInt((String) map.get("page"));
         int l = Integer.parseInt((String) map.get("limit"));
         return userService.selectByPage(p, l, keyWork);
+    }
+
+    //删除单个用户
+    @PostMapping("/user/delete")
+    public Object delete(@RequestParam Map<String, Object> map) {
+        return new Result(1, userService.delete(map.get("id")));
     }
 
     //批量删除用户
@@ -29,10 +35,10 @@ public class UserOptionApi {
     }
 
     //更新用户信息
-    // @PostMapping("/user/updateState")
-    // public Object updateState(@RequestParam Map<String, Object> map) {
-    //     int state = Integer.parseInt((String) map.get("state"));
-    //     int re = userService.updateUserState(map.get("aId").toString(), state);
-    //     return new Result(1, re);
-    // }
+    @PostMapping("/user/updateRoles")
+    public Object updateState(@RequestParam Map<String, Object> map) {
+        String role = (String) map.get("roles");
+        int re = userService.updateUserRoles(map.get("id").toString(), role);
+        return new Result(1, re);
+    }
 }

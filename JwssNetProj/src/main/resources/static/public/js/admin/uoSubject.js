@@ -26,7 +26,7 @@ function initDataTable() {
             , limit: 15
             , url: '/api/admin/user/page' //数据接口
             , page: true //开启分页
-            , cols: [[ //表头
+            , cols: [[
                 {field: 'id', type: 'checkbox', width: '5%', align: 'center', fixed: 'left'}
                 , {field: 'name', title: '用户名', width: '10%'}
                 , {field: 'account', title: '账号', width: '15%'}
@@ -49,23 +49,46 @@ function initDataTable() {
         });
 
         //监听行工具事件
-        table.on('tool(userAdminTable)', function (obj) {
+        table.on('tool(option)', function (obj) {
             let data = obj.data;
-            console.log(obj)
             if (obj.event === 'del') {
                 layer.confirm('真的删除该用户么?', function (index) {
-                    obj.del();
-                    layer.close(index);
+                    //删除单个用户操作
+                    $.ajax({
+                        url: '/api/admin/user/delete',
+                        type: 'POST',
+                        data: data,
+                        success: function (xhr) {
+                            if (xhr.code === 1) {
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.msg("删除失败！");
+                            }
+                        }
+                    });
                 });
             } else if (obj.event === 'edit') {
                 layer.prompt({
                     formType: 2
-                    , value: data.email
+                    , title: '修改用户角色'
+                    , value: data.roles
                 }, function (value, index) {
-                    obj.update({
-                        email: value
+                    let req = data;
+                    req.roles = value;
+                    $.ajax({
+                        url: '/api/admin/user/updateRoles',
+                        type: 'POST',
+                        data: req,
+                        success: function (xhr) {
+                            if (xhr.code === 1) {
+                                obj.update({roles: value});
+                                layer.close(index);
+                            } else {
+                                layer.msg('更新失败！');
+                            }
+                        }
                     });
-                    layer.close(index);
                 });
             }
         });
@@ -89,7 +112,7 @@ function searchByEnter() {
         if (e.keyCode === 13) {
             let s = $("#searchInput").val();
             let obj = {};
-            obj.title = s;
+            obj.name = s;
             tableReload(obj);
         }
     });

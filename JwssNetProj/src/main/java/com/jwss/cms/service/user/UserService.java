@@ -3,15 +3,15 @@ package com.jwss.cms.service.user;
 import java.util.*;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jwss.cms.config.HostConfig;
 import com.jwss.cms.entity.ResultCode;
 import com.jwss.cms.entity.render.Result;
 import com.jwss.cms.entity.sqldata.User;
-import com.jwss.cms.mapper.ArticleMapper;
 
 import com.jwss.cms.mapper.UserMapper;
+import com.jwss.cms.service.BaseService;
 import com.jwss.cms.util.Sys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +25,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
-public class UserService {
+public class UserService implements BaseService {
     private final Logger logger = LoggerFactory.getLogger(UserService.class);
     @Resource
     UserMapper userMapper;
-    @Resource
-    ArticleMapper articleMapper;
-    @Resource
-    HostConfig hostConfig;
     @Autowired
     StringRedisTemplate redisTemplate;
 
@@ -186,23 +182,21 @@ public class UserService {
     }
 
     /**
-     * 更新文章状态
+     * 更新用户角色
      *
-     * @param aId   文章id
-     * @param state 提交类型
+     * @param uuid 用户UUID
+     * @param role 用户角色
      * @return 返回数据更新条数
      */
-    public int updateArticleState(String aId, int state, Map<String, String> map) {
-        // if (aId.equals("") || state < 0) {
-        //     return 0;
-        // }
-        // Article article = new Article();
-        // article.setAlterDate(new Date());
-        // article.setState(state);
-        // UpdateWrapper<Article> updateWrapper = new UpdateWrapper<>();
-        // updateWrapper.lambda().eq(Article::getId, aId);
-        // return userMapper.update(article, updateWrapper);
-        return 1;
+    public int updateUserRoles(String uuid, String role) {
+        if (uuid.equals("")) {
+            return 0;
+        }
+        User user = new User();
+        user.setRoles(role);
+        UpdateWrapper<User> updateWrapper = new UpdateWrapper<>();
+        updateWrapper.lambda().eq(User::getId, uuid);
+        return userMapper.update(user, updateWrapper);
     }
 
     /**
@@ -224,5 +218,27 @@ public class UserService {
         hashMap.put("msg", "成功");
         hashMap.put("code", 0);
         return hashMap;
+    }
+
+    @Override
+    public int insert(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int delete(Object o) {
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.lambda().eq(User::getId, o);
+        return userMapper.delete(queryWrapper);
+    }
+
+    @Override
+    public int update(Object o) {
+        return 0;
+    }
+
+    @Override
+    public Object select(int index, int total) {
+        return null;
     }
 }
