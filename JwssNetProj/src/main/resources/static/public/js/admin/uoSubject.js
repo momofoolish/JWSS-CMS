@@ -11,6 +11,7 @@ function tableReload(obj) {
     baseTable.reload({
         where: {
             title: obj.title === undefined ? "" : obj.title,
+            roles: (obj.roles === undefined || obj.roles === "") ? "" : obj.roles,
         }
     });
 }
@@ -22,6 +23,7 @@ function initDataTable() {
         baseTable = table.render({
             elem: '#userAdminTable'
             , id: 'optionSelects'
+            , toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
             , height: 312
             , limit: 15
             , url: '/api/admin/user/page' //数据接口
@@ -46,6 +48,29 @@ function initDataTable() {
                 ids.push(item.id);
             });
             console.log(ids);
+        });
+
+        //头工具栏事件
+        table.on('toolbar(option)', function(obj){
+            let o = {};
+            switch(obj.event){
+                case 'userE':
+                    o.roles = "user";
+                    break;
+                case 'authorE':
+                    o.roles = "author";
+                    break;
+                case 'adminE':
+                    o.roles = "admin";
+                    break;
+                case 'allE':
+                    o.roles = "";
+                    break;
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');//自定义头工具栏右侧图标 - 提示
+                    break;
+            }
+            tableReload(o);
         });
 
         //监听行工具事件

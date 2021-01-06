@@ -18,6 +18,7 @@
             <input type="text" name="title" required lay-verify="required" id="searchInput"
                    placeholder="输入搜索" autocomplete="off" class="layui-input">
         </div>
+
         <div class="layui-col-md3">
             <button type="button" style="margin-left: 1px" id="searchBtn"
                     class="layui-btn layui-btn-primary">搜索
@@ -27,6 +28,16 @@
             <button id="deleteBtn" type="button" class="layui-btn layui-btn-normal">删除</button>
         </div>
     </div>
+
+<#--  筛选工具  -->
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="allE">查看所有</button>
+            <button class="layui-btn layui-btn-sm" lay-event="userE">普通用户</button>
+            <button class="layui-btn layui-btn-sm" lay-event="authorE">筛选作者</button>
+            <button class="layui-btn layui-btn-sm" lay-event="adminE">管理员</button>
+        </div>
+    </script>
 
     <table id="userAdminTable" lay-filter="option"></table>
 

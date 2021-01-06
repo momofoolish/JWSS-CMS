@@ -159,8 +159,14 @@ public class UserService implements BaseService {
      * @param total 查询多少条？
      * @return 用户队列
      */
-    public Map<String, Object> selectByPage(int index, int total, String keyWord) {
+    public Map<String, Object> selectByPage(int index, int total, Map<String, Object> map) {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        String keyWord = map.get("name") == null ? "" : map.get("name").toString();
+        if (map.get("roles") !=  null) {
+            if( !("".equals(map.get("roles"))) ){
+                queryWrapper.lambda().eq(User::getRoles, map.get("roles"));
+            }
+        }
         queryWrapper.select(
                 "id", "account", "password", "name", "mail",
                 "roles", "register_date"

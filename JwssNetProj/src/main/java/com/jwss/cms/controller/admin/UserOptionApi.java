@@ -16,10 +16,9 @@ public class UserOptionApi {
     //分页查询用户
     @GetMapping("/user/page")
     public Object userPage(@RequestParam Map<String, Object> map) {
-        String keyWork = map.get("name") == null ? "" : map.get("name").toString();
         int p = Integer.parseInt((String) map.get("page"));
         int l = Integer.parseInt((String) map.get("limit"));
-        return userService.selectByPage(p, l, keyWork);
+        return userService.selectByPage(p, l, map);
     }
 
     //删除单个用户
