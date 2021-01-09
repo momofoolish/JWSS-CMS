@@ -1,7 +1,7 @@
 package com.jwss.cms.config;
 
 import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
-import com.jwss.cms.BlogApplication;
+import com.jwss.cms.CMSApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -17,7 +17,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @Configuration
 @EnableSwagger2
 @EnableKnife4j
-@Import(BlogApplication.class)
+@Import(CMSApplication.class)
 public class SwaggerConfig {
 
     @Bean(value = "defaultApi2")

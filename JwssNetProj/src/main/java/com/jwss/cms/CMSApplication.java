@@ -1,18 +1,19 @@
 package com.jwss.cms;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableAsync
 @EnableScheduling
-@SpringBootApplication
-@MapperScan("com.jwss.cms.mapper")
+@SpringBootApplication(scanBasePackages = "com.jwss")
 @ImportResource(locations = {"classpath:kaptcha.xml"})
-public class BlogApplication {
+public class CMSApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BlogApplication.class, args);
+        SpringApplication.run(CMSApplication.class, args);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.jwss.cms.config;
+package com.jwss.cms.constant;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

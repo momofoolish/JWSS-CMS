@@ -165,6 +165,8 @@ public class UserService implements BaseService {
         if (map.get("roles") !=  null) {
             if( !("".equals(map.get("roles"))) ){
                 queryWrapper.lambda().eq(User::getRoles, map.get("roles"));
+            }else if( !("".equals(map.get("roles"))) ){
+
             }
         }
         queryWrapper.select(

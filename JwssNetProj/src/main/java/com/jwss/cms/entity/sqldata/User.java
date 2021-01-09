@@ -10,7 +10,6 @@ import java.util.Date;
 @Data
 @TableName("tb_user")
 public class User {
-
     private String id;
     @NotNull(message = "账号不能为空")
     @Size(min = 6, max = 16, message = "账号必须在6~16间")

@@ -1,6 +1,6 @@
 package com.jwss.cms.controller.article;
 
-import com.jwss.cms.config.HostConfig;
+import com.jwss.cms.constant.HostConfig;
 import com.jwss.cms.constant.RedisKeyType;
 import com.jwss.cms.entity.render.Result;
 import com.jwss.cms.entity.sqldata.Article;

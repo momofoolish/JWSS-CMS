@@ -6,7 +6,7 @@ import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.UUID;
 
-import com.jwss.cms.config.HostConfig;
+import com.jwss.cms.constant.HostConfig;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 

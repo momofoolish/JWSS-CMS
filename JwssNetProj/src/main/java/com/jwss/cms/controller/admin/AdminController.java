@@ -46,4 +46,10 @@ public class AdminController {
         model.addAttribute("title","文章审核列表");
         return "admin/articleExamine";
     }
+
+    @GetMapping("/user/examine")
+    public String adminUserExamine(Model model){
+        model.addAttribute("title","作者审核列表");
+        return "admin/userExamine";
+    }
 }

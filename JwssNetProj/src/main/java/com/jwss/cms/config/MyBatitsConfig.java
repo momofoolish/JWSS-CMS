@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.jwss.blog.mapper")
+@MapperScan("com.jwss.cms.mapper")
 public class MyBatitsConfig {
 
     @Bean

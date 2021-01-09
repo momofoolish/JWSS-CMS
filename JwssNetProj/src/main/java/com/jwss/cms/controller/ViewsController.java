@@ -35,14 +35,6 @@ public class ViewsController {
     @Autowired
     StringRedisTemplate redisTemplate;
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("baseTitle", "Jwss");
-        model.addAttribute("title", "首页");
-        renderMenu(model);
-        return "index";
-    }
-
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("baseTitle", "Jwss");
