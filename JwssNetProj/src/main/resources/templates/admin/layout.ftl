@@ -52,7 +52,7 @@
 <#macro Menu>
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+            <ul class="layui-nav layui-nav-tree" lay-filter="leftCard">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="/jwss/admin/">默认首页</a>
                 </li>
@@ -70,12 +70,28 @@
                         <dd><a href="/jwss/admin/user/examine">作者申请</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">访问统计</a></li>
+                <li class="layui-nav-item"><a href="javascript:">访问统计</a></li>
                 <li class="layui-nav-item"><a href="">数据管理</a></li>
                 <li class="layui-nav-item"><a href="">版本管理</a></li>
             </ul>
         </div>
     </div>
+<#--JavaScript脚本执行-->
+    <script>
+        //设置为href跳转后保持选中状态
+        url = window.location.pathname;
+        $("a[href='" + url + "']").parent().addClass('layui-this');
+        $("a[href='" + url + "']").parent().parent().parent().addClass('layui-nav-itemed');
+
+        layui.use('element', function () {
+            var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+            //监听导航点击
+            element.on('nav(leftCard)', function (elem) {
+                console.log(elem[0].innerText);
+            });
+            element.render('nav');
+        });
+    </script>
 </#macro>
 
 <#--主体-->

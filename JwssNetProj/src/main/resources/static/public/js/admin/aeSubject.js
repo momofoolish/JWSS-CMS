@@ -2,7 +2,6 @@
 const baseOption = {
     elem: '#articleAdminTable'
     , id: 'optionSelects'
-    , height: 312
     , limit: 15
     , url: '/api/admin/article/examineList' //数据接口
     , page: true //开启分页

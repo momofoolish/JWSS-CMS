@@ -24,7 +24,6 @@ function initDataTable() {
             elem: '#userAdminTable'
             , id: 'optionSelects'
             , toolbar: '#toolbar' //开启头部工具栏，并为其绑定左侧模板
-            , height: 312
             , limit: 15
             , url: '/api/admin/user/page' //数据接口
             , page: true //开启分页

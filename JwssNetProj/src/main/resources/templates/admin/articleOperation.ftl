@@ -14,11 +14,3 @@
     </@layout.Body>
     <@layout.Footer></@layout.Footer>
 </@layout.Contianer>
-
-<#--JavaScript脚本执行-->
-<script>
-    //JavaScript代码区域
-    layui.use('element', function () {
-        var element = layui.element;
-    });
-</script>

@@ -6,7 +6,6 @@ window.onload = function () {
         baseTable = table.render({
             elem: '#articleAdminTable'
             , id: 'optionSelects'
-            , height: 312
             , limit: 15
             , url: '/api/admin/article/page' //数据接口
             , page: true //开启分页
