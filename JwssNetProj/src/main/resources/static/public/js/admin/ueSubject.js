@@ -11,7 +11,7 @@ function tableReload(obj) {
     baseTable.reload({
         where: {
             title: obj.title === undefined ? "" : obj.title,
-            roles: (obj.roles === undefined || obj.roles === "") ? "" : obj.roles,
+            examineType: obj.examineType === undefined ? "" : obj.examineType,
         }
     });
 }
@@ -32,7 +32,20 @@ function initDataTable() {
                 , {field: 'title', title: '流程标题', width: '10%'}
                 , {field: 'content', title: '内容', width: '15%'}
                 , {field: 'opinion', title: '意见', width: '15%'}
-                , {field: 'auditState', title: '当前状态', width: '10%'}
+                , {
+                    field: 'auditState', title: '当前状态', width: '10%', templet: function (v) {
+                        switch (v.auditState) {
+                            case 0:
+                                return "待审批";
+                            case 1:
+                                return "已通过";
+                            case 2:
+                                return "已退回";
+                            case 3:
+                                return "已归档";
+                        }
+                    }
+                }
                 , {field: 'flowId', title: '流程ID', width: '10%'}
                 , {field: 'currentOperator', title: '当前操作人', width: '10%'}
                 , {field: 'createDate', title: '创建时间', width: '10%', sort: true}
@@ -44,38 +57,60 @@ function initDataTable() {
         table.on('tool(option)', function (obj) {
             let data = obj.data;
             if (obj.event === 'pass') {
-                console.log("---------------")
+                console.log("---------------");
                 layer.confirm('确定提交?', function (index) {
-                    updateFlowBase(data.id, 1);
+                    updateFlowBase(data.id, 1, index);
                 });
             } else if (obj.event === 'noPass') {
-                layer.confirm('确定退回？', function (value, index) {
-                    updateFlowBase(data.id, 0);
+                layer.confirm('确定退回？', function (index) {
+                    updateFlowBase(data.id, 2, index);
                 });
             }
         });
 
+        //头工具栏事件
+        table.on('toolbar(option)', function (obj) {
+            let o = {};
+            switch (obj.event) {
+                case 'allE':
+                    o.examineType = -1;
+                    break;
+                case 'backE':
+                    o.examineType = 2;
+                    break;
+                case 'passE':
+                    o.examineType = 1;
+                    break;
+                case 'examineE':
+                    o.examineType = 0;
+                    break;
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');//自定义头工具栏右侧图标 - 提示
+                    break;
+            }
+            tableReload(o);
+        });
     });
 }
 
-//修改用户权限
-function updateFlowBase(id, examineType) {
+//更新流程状态
+function updateFlowBase(id, examineType, index) {
     let obj = {};
     obj.id = id;
     obj.examineType = examineType;
-    // $.ajax({
-    //     url: '/api/admin/user/alterPower',
-    //     type: 'POST',
-    //     data: obj,
-    //     success: function (xhr) {
-    //         if (xhr.code === 1) {
-    //             obj.roles = "user";
-    //             tableReload(obj);
-    //         } else {
-    //             layer.msg("操作失败！");
-    //         }
-    //     }
-    // });
+    $.ajax({
+        url: '/api/admin/flowBase/update',
+        type: 'POST',
+        data: obj,
+        success: function (xhr) {
+            if (xhr.code === 1) {
+                tableReload("");
+                layer.close(index);
+            } else {
+                layer.msg("操作失败！");
+            }
+        }
+    });
 }
 
 //单击搜索功能
@@ -94,7 +129,7 @@ function searchByEnter() {
         if (e.keyCode === 13) {
             let s = $("#searchInput").val();
             let obj = {};
-            obj.name = s;
+            obj.title = s;
             tableReload(obj);
         }
     });

@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>layout 后台大布局 - Layui</title>
+        <title>JWSS 内容分发系统</title>
     </head>
     <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
@@ -18,7 +18,7 @@
 <#--导航栏-->
 <#macro Nav>
     <div class="layui-header">
-        <div class="layui-logo">layui 后台布局</div>
+        <div class="layui-logo">JWSS 后台管理</div>
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">控制台</a></li>
             <li class="layui-nav-item"><a href="">商品管理</a></li>
@@ -43,7 +43,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item"><a href="">注销</a></li>
         </ul>
     </div>
 </#macro>

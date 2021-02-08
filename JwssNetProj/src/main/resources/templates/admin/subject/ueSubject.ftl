@@ -9,7 +9,7 @@
 
 <#--  操作按钮  -->
     <script type="text/html" id="barUser">
-        <a class="layui-btn layui-btn-xs" lay-event="pass ">通过</a>
+        <a class="layui-btn layui-btn-xs" lay-event="pass">通过</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="noPass">退回</a>
     </script>
 
@@ -25,6 +25,16 @@
             </button>
         </div>
     </div>
+
+<#--  筛选工具  -->
+    <script type="text/html" id="toolbar">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="allE">查看所有</button>
+            <button class="layui-btn layui-btn-sm" lay-event="backE">退回流程</button>
+            <button class="layui-btn layui-btn-sm" lay-event="passE">通过流程</button>
+            <button class="layui-btn layui-btn-sm" lay-event="examineE">审批流程</button>
+        </div>
+    </script>
 
     <table id="userAdminTable" lay-filter="option"></table>
 

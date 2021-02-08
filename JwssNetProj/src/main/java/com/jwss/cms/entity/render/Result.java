@@ -6,6 +6,8 @@ import java.util.Date;
 
 @Data
 public class Result {
+    public Result(){}
+
     public Result(int code, Object content) {
         this.code = code;
         this.content = content;

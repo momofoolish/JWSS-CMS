@@ -14,6 +14,6 @@ public class FlowBase {
     String opinion;
     int auditState;
     String currentOperator;
-    int flowId;
+    Integer flowId;
     Date createDate;
 }
