@@ -2,6 +2,8 @@ package com.jwss.gateway.controller;
 
 import com.jwss.cms.entity.sqldata.Menu;
 import com.jwss.cms.service.menu.MenuService;
+import com.jwss.cms.service.user.OnlineService;
+import com.jwss.cms.service.user.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jetbrains.annotations.NotNull;
@@ -17,11 +19,14 @@ import java.util.List;
 public class DoorController {
     @Resource
     MenuService menuService;
+    @Resource
+    OnlineService onlineService;
 
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("baseTitle", "Jwss");
         model.addAttribute("title", "首页");
+        model.addAttribute("user", onlineService.userInfo());
         renderMenu(model);
         return "index";
     }

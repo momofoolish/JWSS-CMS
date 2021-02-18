@@ -32,8 +32,8 @@ class ApiShiroFilters {
         filterCDMap.put("/register", "anon");
         filterCDMap.put("/article/detail/**", "anon");
         //管理员页面授权
-        filterCDMap.put("/jwss/admin/**", "anon");
-        filterCDMap.put("/api/admin/**", "anon");
+        filterCDMap.put("/jwss/admin/**", "roles[admin]");
+        filterCDMap.put("/api/admin/**", "roles[admin]");
         //接口过滤
         filterCDMap.put("/api/home", "anon");
         filterCDMap.put("/api/author", "anon");
@@ -44,13 +44,12 @@ class ApiShiroFilters {
         filterCDMap.put("/api/user/**", "anon");
         //静态资源放行
         filterCDMap.put("/public/**", "anon");
-        filterCDMap.put("/favicon.ico", "anon");
         //角色授权过滤器
         filterCDMap.put("/api/comment/userSay", "roles[user,author]");
         filterCDMap.put("/api/comment/feedback", "roles[user,author]");
-        filterCDMap.put("/api/article/author/**", "roles[author]");
+        filterCDMap.put("/api/article/author/**", "roles[author,admin]");
         //角色静态资源过滤器
-        filterCDMap.put("/author/**", "roles[author]");
+        filterCDMap.put("/author/**", "roles[author,admin]");
         filterCDMap.put("/logout", "logout");
         filterCDMap.put("/**", "authc");
         //登录页面

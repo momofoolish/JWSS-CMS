@@ -24,6 +24,14 @@
             </#list>
         </ul>
         <ul class="jw-head-inRight">
+            <#if user??>
+                <img src="${user.avatar}" style="width: 36px;border-radius: 16px;">
+                <li><a href="${'/' + user.account}">${user.name}</a></li>
+                <#if user.roles=='admin'>
+                    <li><a href="/jwss/admin/">后台管理</a></li>
+                </#if>
+            </#if>
+
             <#list menuList as menu>
                 <#if menu.colType=='0'>
                 <#-- 如果登录了就不渲染登录/注册菜单 -->
@@ -38,7 +46,7 @@
 
 <#--内容-->
 <#macro Body>
-<#nested>
+    <#nested>
 </#macro>
 
 <#--底部-->
