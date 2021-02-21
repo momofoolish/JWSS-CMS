@@ -11,8 +11,8 @@
 <#macro Alert>
     <div id="JwssAlert" style="z-index: 9999;background: rgba(0, 0, 0, 0.6);position: fixed;outline: 0;
         width: 100%;height: 100%;-webkit-overflow-scrolling: touch;overflow: hidden;
-        left: 0;top: 0;right: 0;bottom: 0;display: flex;justify-content: center;
-        align-items: center; visibility: hidden;">
+        left: 0;top: 0;right: 0;bottom: 0;display: none;justify-content: center;
+        align-items: center;">
         <div style="width: 330px;height: 330px;display: flex;align-items: center;flex-direction: column;
             background: #fff9ec;border-radius: 6px;justify-content: center;">
             <#nested>

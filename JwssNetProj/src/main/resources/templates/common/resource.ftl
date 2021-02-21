@@ -7,6 +7,12 @@
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>${baseTitle}-<#if title??>${title}</#if></title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+            }
+        </style>
     </head>
     <body> <#nested> </body>
     </html>
@@ -74,9 +80,6 @@
     <link rel="stylesheet" href="/public/plus/layui/css/layui.css">
 </#macro>
 
-<#macro JqueryLabel>
+<#macro Jquery>
     <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
-    <link rel="stylesheet" href="http://res.vjwss.top/lib/jquerytag/dist/jquery.tagsinput-revisited.min.css">
-    <script type="text/javascript"
-            src="http://res.vjwss.top/lib/jquerytag/dist/jquery.tagsinput-revisited.min.js"></script>
 </#macro>
