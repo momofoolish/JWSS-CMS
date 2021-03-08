@@ -29,19 +29,13 @@ window.onload = function () {
             jwssAlert(warn, "请选择分类", "", "关闭");
             return;
         }
-        if (cover === "" || cover === undefined) {
-            jwssAlert(warn, "缺少封面", "", "重选");
-            return;
-        }
 
         let formData = new FormData();
         formData.append("edKey", encryptConst);
         formData.append("sort", $("#selectSort").val());
         formData.append("title", $("#inputTitle").val());
-        formData.append("desc", $("#inputDesc").val());
-        formData.append("tag", tag.toString());
         formData.append("content", content);
-        formData.append("cover", cover);
+        formData.append("cover", cover === undefined ? "" : cover);
         $.ajax({
             url: '/api/article/author/add',
             method: 'post',

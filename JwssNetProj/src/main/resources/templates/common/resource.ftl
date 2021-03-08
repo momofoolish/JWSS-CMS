@@ -31,7 +31,7 @@
         </ul>
         <ul class="jw-head-inRight">
             <#if user??>
-                <img src="${user.avatar}" style="width: 36px;border-radius: 16px;">
+                <img src="${user.avatar}" style="width: 36px;border-radius: 36px;border: 1px solid whitesmoke;">
                 <li><a href="${'/' + user.account}">${user.name}</a></li>
                 <#if user.roles=='admin'>
                     <li><a href="/jwss/admin/">后台管理</a></li>

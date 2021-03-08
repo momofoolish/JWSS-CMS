@@ -30,9 +30,9 @@ public class ArticleController {
     //文章增删改查之 增
     @PostMapping("/author/add")
     public Result insert(HttpServletRequest request, @RequestParam("title") String title,
-                         @RequestParam("desc") String desc, @RequestParam("content") String content,
-                         @RequestParam("sort") String sort, @RequestParam("tag") String tag,
-                         @RequestParam("cover") MultipartFile cover, @RequestParam("edKey") String edKey) {
+                         @RequestParam("content") String content,@RequestParam("sort") String sort,
+                         @RequestParam(value = "cover", required = false) MultipartFile cover,
+                         @RequestParam("edKey") String edKey) {
         String myKey = redisTemplate.opsForValue().get(Sys.getClientHost(request) + RedisKeyType.edKey);
         if (myKey == null || !myKey.equals(edKey)) {
             return new Result(-1, "请求失败");
@@ -42,10 +42,10 @@ public class ArticleController {
         }
         Article article = new Article();
         article.setTitle(title);
-        article.setDescription(desc);
         article.setContent(content);
-        article.setLabel(tag);
-        article.setCover(Sys.fileSave(cover, hostConfig));
+        if(null != cover && !cover.isEmpty()){
+            article.setCover(Sys.fileSave(cover, hostConfig));
+        }
         if (sort.equals("分类")) {
             return new Result(0, "失败");
         }

@@ -11,11 +11,11 @@
 
     <#-- 内容编辑 -->
         <div class="view-editor">
-            <div style="width: 30%;display: flex;flex-direction: column;">
+            <ul class="article-list">
+                <li><h3>新建文件标题</h3><span>2020-12-22</span></li>
+            </ul>
 
-            </div>
-
-            <div style="width: 60%">
+            <div style="width: 60%;padding: 1em;">
                 <#-- 文章标题 -->
                 <div style="width: 100%;text-align: center;">
                     <input id="inputTitle" type="text" class="ae-input-title" placeholder="标题">
@@ -51,9 +51,9 @@
 
                 <div>
                     <button id="submitBtn" type="button" class="button-col">提交</button>
-                    <button type="button" class="button-col">存稿</button>
-                    <button type="button" class="button-col">预览</button>
-                    <button type="button">放弃</button>
+                    <button id="saveBtn" type="button" class="button-col">存稿</button>
+                    <button id="previewBtn" type="button" class="button-col">预览</button>
+                    <button id="giveUpBtn" type="button">放弃</button>
                 </div>
             </div>
         </div>

@@ -4,50 +4,34 @@
 
 <@macros.Base>
     <@macros.Head></@macros.Head>
+    <@macros.Jquery></@macros.Jquery>
     <@encr.EncryptConst></@encr.EncryptConst>
     <@macros.Body>
-        <@macros.JqueryLabel></@macros.JqueryLabel>
         <script type="text/javascript" src="http://res.vjwss.top/lib/wangEditor-4.5.0/wangEditor.min.js"></script>
 
     <#-- 内容编辑 -->
         <div class="view-editor">
-            <#--    面包屑-->
-            <span class="com-bread">
-                <cite>编辑文章</cite>
-            </span>
+            <ul class="article-list">
+                <li><h3>新建文件标题</h3><span>2020-12-22</span></li>
+            </ul>
 
-            <#-- 文章标题 -->
-            <label style="margin-top: 1em;">
-                <input id="inputTitle" type="text" class="ae-input-title" placeholder="标题">
-            </label>
-
-            <#-- 描述 -->
-            <label>
-                <textarea id="inputDesc" class="ae-input-Desc" placeholder="内容描述"></textarea>
-            </label>
-
-            <#-- 编辑器 -->
-            <style>
-                .w-e-text-container {
-                    height: 600px !important;
-                }
-            </style>
-            <div id="editorDiv">
-                <p>请输入内容...</p>
-            </div>
-
-            <#-- 上传图片 -->
-            <div class="upload-img">
-                <div class="upload-div-bg">
-                    <input type="file" id="uploadInput" accept="image/jpeg,image/png">
-                    <@coms.UploadButtonIcon></@coms.UploadButtonIcon>
+            <div style="width: 60%;padding: 1em;">
+                <#-- 文章标题 -->
+                <div style="width: 100%;text-align: center;">
+                    <input id="inputTitle" type="text" class="ae-input-title" placeholder="标题">
                 </div>
-                <div id="coverPre"></div>
+                <#-- 编辑器 -->
+                <style>
+                    .w-e-text-container {
+                        height: 640px !important;
+                    }
+                </style>
+                <div id="editorDiv"></div>
             </div>
 
-            <#-- 其他选项  -->
-            <div class="other-row" style="margin-top: 1em">
-                <div class="other-row-col-1">
+            <#-- 操作按钮 -->
+            <div class="button-row">
+                <div>
                     <select id="selectSort" class="select-sort">
                         <option selected>分类</option>
                         <#list articleSortList as articleSort>
@@ -55,21 +39,22 @@
                         </#list>
                     </select>
                 </div>
-                <div class="other-row-col-2">
-                    <div class="jq22-content">
-                        <form id="form" class="d-flex align-items-center">
-                            <input id="form-tags-2" name="tags-2" type="text" value="输入标签">
-                        </form>
-                    </div>
-                </div>
-            </div>
 
-            <#-- 操作按钮 -->
-            <div class="button-row">
-                <button id="submitBtn" type="button" class="button-col">提交</button>
-                <button type="button" class="button-col">存稿</button>
-                <button type="button" class="button-col">预览</button>
-                <button type="button">放弃</button>
+                <#-- 上传图片 -->
+                <div class="upload-img">
+                    <div class="upload-div-bg">
+                        <input type="file" id="uploadInput" accept="image/jpeg,image/png">
+                        <@coms.UploadButtonIcon></@coms.UploadButtonIcon>
+                    </div>
+                    <div id="coverPre"></div>
+                </div>
+
+                <div>
+                    <button id="submitBtn" type="button" class="button-col">提交</button>
+                    <button id="saveBtn" type="button" class="button-col">存稿</button>
+                    <button id="previewBtn" type="button" class="button-col">预览</button>
+                    <button id="giveUpBtn" type="button">放弃</button>
+                </div>
             </div>
         </div>
 

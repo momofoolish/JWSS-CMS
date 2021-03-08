@@ -7,7 +7,6 @@ ul, li {
 .jw-head-inRight a, .jw-head-inLeft a {
     text-decoration: none;
     color: white;
-    font-family: "Microsoft YaHei UI";
 }
 
 .jw-head-out .jw-head-inLeft a {
@@ -24,7 +23,6 @@ ul, li {
     justify-content: space-between;
     align-items: center;
     background: #FC7FAD;
-    border-radius: 2px;
     box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
 }
 
@@ -34,5 +32,5 @@ ul, li {
 
 .jw-head-inRight {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
 }

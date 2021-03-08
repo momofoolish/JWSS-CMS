@@ -1,7 +1,8 @@
 window.onload = function () {
+    $("#JwssAlert").hide();
+
     let content;    //文章内容
     let cover;      //封面
-    let tag = [];   //标签
 
     //创建文本编辑器
     const editor = new wangEditor('#editorDiv');
@@ -12,46 +13,12 @@ window.onload = function () {
     }
     editor.create();
 
-    //标签组件回调
-    $(function () {
-        $('#form-tags-2').tagsInput({
-            'onAddTag': function (input, value) {
-                tag.push(value);
-            },
-            'onRemoveTag': function (input, value) {
-                tag.forEach(function (v, index) {
-                    if (value === v) {
-                        delete tag[index];
-                    }
-                })
-            },
-            'onChange': function (input, value) {
-
-            }
-        });
-    });
-
-    //图片上传
-    $("#uploadInput").on('change', function (event) {
-        compressImage(event.target.files[0], function (file) {
-            let img = document.createElement("img");
-            img.src = URL.createObjectURL(file);
-            img.width = 200;
-            $("#coverPre").html(img);
-            cover = file;
-        });
-    });
-
     //提交
     $("#submitBtn").on('click', function () {
         //判断内容是否为空
         let warn = "<span style='color: orange;font-size: 28px'>警告</span>";
         if ($("#inputTitle").val().length < 4 || $("#inputTitle").val().length > 32) {
             jwssAlert(warn, "标题长度不对", "", "关闭");
-            return;
-        }
-        if ($("#inputDesc").val().length < 4 || $("#inputDesc").val().length >= 128) {
-            jwssAlert(warn, "描述字数不对", "", "关闭");
             return;
         }
         if (content === undefined || content.length < 32) {
@@ -62,26 +29,13 @@ window.onload = function () {
             jwssAlert(warn, "请选择分类", "", "关闭");
             return;
         }
-        if (tag.toString().length <= 0) {
-            jwssAlert(warn, "写个标签吧！", "", "好的!");
-            return;
-        } else if (tag.toString().length > 32) {
-            jwssAlert(warn, "标签过多", "", "关闭");
-            return;
-        }
-        if (cover === "" || cover === undefined) {
-            jwssAlert(warn, "缺少封面", "", "重选");
-            return;
-        }
 
         let formData = new FormData();
         formData.append("edKey", encryptConst);
         formData.append("sort", $("#selectSort").val());
         formData.append("title", $("#inputTitle").val());
-        formData.append("desc", $("#inputDesc").val());
-        formData.append("tag", tag.toString());
         formData.append("content", content);
-        formData.append("cover", cover);
+        formData.append("cover", cover === undefined ? "" : cover);
         $.ajax({
             url: '/api/article/author/add',
             method: 'post',
@@ -96,6 +50,17 @@ window.onload = function () {
                     jwssAlert("提示：", response.content, "", "关闭");
                 }
             }
+        });
+    });
+
+    //图片上传
+    $("#uploadInput").on('change', function (event) {
+        compressImage(event.target.files[0], function (file) {
+            let img = document.createElement("img");
+            img.src = URL.createObjectURL(file);
+            img.width = 200;
+            $("#coverPre").html(img);
+            cover = file;
         });
     });
 
@@ -171,12 +136,14 @@ const jwssAlert = (t, c, ti, b) => {
     $("#pMsg").html(c);
     $("#pTip").html(ti);
     $("#pBtn").html(b);
-    $("#JwssAlert").css({'visibility': 'visible'});
+    let jwssAlertEle = $("#JwssAlert");
+    jwssAlertEle.css({'display': 'flex'});
+    jwssAlertEle.show();
 }
 
 // 弹窗按钮事件
 const alertButtonHandle = () => {
     $("#JwssAlert button").on('click', function () {
-        $("#JwssAlert").css({'visibility': 'hidden'});
+        $("#JwssAlert").hide();
     });
 }

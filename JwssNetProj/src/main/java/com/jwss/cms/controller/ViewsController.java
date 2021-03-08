@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jwss.cms.constant.RedisKeyType;
 import com.jwss.cms.entity.sqldata.ArticleSort;
 import com.jwss.cms.entity.sqldata.Menu;
+import com.jwss.cms.service.article.ArticleServiceImpl;
 import com.jwss.cms.service.article.SortService;
 import com.jwss.cms.service.menu.MenuService;
 import com.jwss.cms.util.MyEncrypt;
@@ -32,6 +33,8 @@ public class ViewsController {
     SortService sortService;
     @Resource
     MyEncrypt myEncrypt;
+    @Resource
+    ArticleServiceImpl articleServiceImpl;
     @Autowired
     StringRedisTemplate redisTemplate;
 
@@ -63,6 +66,7 @@ public class ViewsController {
         }
     }
 
+    //文章编辑器页面
     @GetMapping("/author/editor")
     public String editor(Model model, HttpServletRequest request) {
         model.addAttribute("baseTitle", "Jwss");

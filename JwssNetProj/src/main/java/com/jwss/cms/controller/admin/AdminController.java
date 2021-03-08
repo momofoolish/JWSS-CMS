@@ -23,42 +23,47 @@ public class AdminController {
     @Resource
     OnlineService onlineService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public String adminIndex(Model model){
         model.addAttribute("title","AdminHome");
+        model.addAttribute("admin", onlineService.userInfo());
+        return "admin/index";
+    }
+
+    @GetMapping("/default")
+    public String systemInfo(Model model){
         model.addAttribute("articleList", articleServiceImpl.selectNewList(8));
         model.addAttribute("feedbackList", commentService.queryFeedBackList(5));
         model.addAttribute("userList", userService.queryUserNewList(8));
-        model.addAttribute("admin", onlineService.userInfo());
-        return "admin/index";
+        return "admin/subject/default";
     }
 
     @GetMapping("/article/operation")
     public String adminArticleOperation(Model model){
         model.addAttribute("title","文章操作");
         model.addAttribute("admin", onlineService.userInfo());
-        return "admin/articleOperation";
-    }
-
-    @GetMapping("/user/operation")
-    public String userOperation(Model model){
-        model.addAttribute("title","网站用户");
-        model.addAttribute("admin", onlineService.userInfo());
-        return "admin/userOperation";
+        return "admin/subject/article/operation";
     }
 
     @GetMapping("/article/examine")
     public String adminArticleExamine(Model model){
         model.addAttribute("title","文章审核列表");
         model.addAttribute("admin", onlineService.userInfo());
-        return "admin/articleExamine";
+        return "admin/subject/article/examine";
+    }
+
+    @GetMapping("/user/operation")
+    public String userOperation(Model model){
+        model.addAttribute("title","网站用户");
+        model.addAttribute("admin", onlineService.userInfo());
+        return "admin/subject/user/operation";
     }
 
     @GetMapping("/user/examine")
     public String adminUserExamine(Model model){
         model.addAttribute("title","作者审核列表");
         model.addAttribute("admin", onlineService.userInfo());
-        return "admin/userExamine";
+        return "admin/subject/user/examine";
     }
 
 }
