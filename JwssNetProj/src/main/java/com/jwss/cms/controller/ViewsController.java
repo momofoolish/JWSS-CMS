@@ -2,11 +2,13 @@ package com.jwss.cms.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jwss.cms.constant.RedisKeyType;
+import com.jwss.cms.entity.sqldata.Article;
 import com.jwss.cms.entity.sqldata.ArticleSort;
 import com.jwss.cms.entity.sqldata.Menu;
-import com.jwss.cms.service.article.ArticleServiceImpl;
+import com.jwss.cms.service.article.ArticleService;
 import com.jwss.cms.service.article.SortService;
 import com.jwss.cms.service.menu.MenuService;
+import com.jwss.cms.service.user.OnlineService;
 import com.jwss.cms.util.MyEncrypt;
 import com.jwss.cms.util.Sys;
 import org.apache.shiro.SecurityUtils;
@@ -34,7 +36,9 @@ public class ViewsController {
     @Resource
     MyEncrypt myEncrypt;
     @Resource
-    ArticleServiceImpl articleServiceImpl;
+    ArticleService articleService;
+    @Resource
+    OnlineService onlineService;
     @Autowired
     StringRedisTemplate redisTemplate;
 
@@ -71,6 +75,7 @@ public class ViewsController {
     public String editor(Model model, HttpServletRequest request) {
         model.addAttribute("baseTitle", "Jwss");
         model.addAttribute("title", "文章编辑中心");
+        model.addAttribute("user", onlineService.userInfo());
         IPage<ArticleSort> iPage = (IPage<ArticleSort>) sortService.select(1, 6);
         model.addAttribute("articleSortList", iPage.getRecords());//分类列表
         String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);
@@ -96,15 +101,22 @@ public class ViewsController {
         }
     }
 
+    //关于本站
     @GetMapping("/about")
     public String about() {
         return "about";
     }
 
+    //文章详细
     @GetMapping("/article/detail")
-    public String detail(Model model, @RequestParam int aid) {
-        model.addAttribute("aid", aid);
-        return "detail";
+    public String detail(Model model, @RequestParam String aid) {
+        Article article = articleService.queryDetail(aid);
+        model.addAttribute("article", article);
+        model.addAttribute("baseTitle", "Jwss");
+        model.addAttribute("title", article.getTitle());
+        model.addAttribute("user", onlineService.userInfo());
+        renderMenu(model);
+        return "content/detail";
     }
 
     /**

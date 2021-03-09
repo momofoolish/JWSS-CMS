@@ -82,9 +82,4 @@ public class ArticleController {
         return articleService.searchArticleList(key);
     }
 
-    //文章细节
-    @GetMapping("/detail")
-    public Result detail(@RequestParam int aid) {
-        return articleService.selectDetail(aid);
-    }
 }

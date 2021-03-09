@@ -23,7 +23,7 @@ ul, li {
     justify-content: space-between;
     align-items: center;
     background: #FC7FAD;
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 }
 
 .jw-head-inLeft {
@@ -33,4 +33,10 @@ ul, li {
 .jw-head-inRight {
     display: flex;
     align-items: center;
+}
+
+.jw-head-inRight img {
+    width: 36px;
+    border-radius: 36px;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
 }

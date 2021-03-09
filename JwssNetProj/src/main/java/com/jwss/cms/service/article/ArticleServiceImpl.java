@@ -99,6 +99,20 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
     }
 
     /**
+     * 通过某个字段倒叙获取文章列表
+     * @param key 排序字段
+     * @param total 获取条数
+     * @param cols 列名
+     * @return 文章列表
+     */
+    public List<Article> selectListByKey(String key, int total, String... cols) {
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        IPage<Article> iPage = new Page<>(0, total);
+        queryWrapper.select(cols).orderByDesc(key);
+        return articleMapper.selectPage(iPage, queryWrapper).getRecords();
+    }
+
+    /**
      * 分页查询所有待审核文章
      *
      * @param index 索引值（开始）
@@ -162,9 +176,10 @@ public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
 
     /**
      * 查询文章列表封装
-     * @param index 索引值（开始）
-     * @param total 查询多少条？
-     * @param keyWord 搜索关键词（空的话全局搜索）
+     *
+     * @param index        索引值（开始）
+     * @param total        查询多少条？
+     * @param keyWord      搜索关键词（空的话全局搜索）
      * @param queryWrapper 可以扩展QueryWrapper
      * @return 文章队列
      */

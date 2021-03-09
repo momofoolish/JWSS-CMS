@@ -31,8 +31,7 @@
         </ul>
         <ul class="jw-head-inRight">
             <#if user??>
-                <img src="${user.avatar}" style="width: 36px;border-radius: 36px;border: 1px solid whitesmoke;">
-                <li><a href="${'/' + user.account}">${user.name}</a></li>
+                <li><a href="${'/' + user.account}"><img src="${user.avatar}"></a></li>
                 <#if user.roles=='admin'>
                     <li><a href="/jwss/admin/">后台管理</a></li>
                 </#if>
@@ -57,7 +56,7 @@
 
 <#--底部-->
 <#macro Foot>
-    <div>底部</div>
+    <div style="text-align: center;">底部</div>
 </#macro>
 
 <#--reactjs-->

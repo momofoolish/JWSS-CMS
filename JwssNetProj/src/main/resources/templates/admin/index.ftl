@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
     <script type="text/javascript" src="/public/js/admin/index.js"></script>
-    <link rel="stylesheet" href="/public/css/index.css">
+    <link rel="stylesheet" href="/public/css/admin/index.css">
 
     <title>JWSS 内容分发系统</title>
 </head>

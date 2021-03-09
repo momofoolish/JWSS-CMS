@@ -6,12 +6,6 @@
     overflow: hidden;
 }
 
-.jwss-box-out{
-    display: flex;
-    justify-content: space-around;
-    padding: 1em;
-}
-
 .iframe-content{
     width: 100%;
     height: 100%;

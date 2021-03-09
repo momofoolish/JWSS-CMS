@@ -58,11 +58,7 @@ public class ArticleService {
      * @param aid 文章id
      * @return 文章
      */
-    public Result selectDetail(int aid) {
-        Article article = articleMapper.selectById(aid);
-        if (StringUtils.isEmpty(article)) {
-            return new Result(0, ResultCode.ARTICLE_NO_EXIST);
-        }
-        return new Result(1, article);
+    public Article queryDetail(String aid) {
+        return articleMapper.selectById(aid);
     }
 }
