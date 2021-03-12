@@ -6,13 +6,13 @@ const baseOption = {
     , url: '/api/admin/article/examineList' //数据接口
     , page: true //开启分页
     , cols: [[ //表头
-        {field: 'id', type: 'checkbox', title: 'id', width: '5%'}
+        {field: 'id', width: '5%', hide: true}
         , {field: 'title', title: '标题', width: '20%'}
-        , {field: 'authorId', title: '作者ID', width: '10%'}
+        , {field: 'author', title: '作者', width: '15%'}
+        , {field: 'sort', title: '分类', width: '20%'}
         , {field: 'label', title: '标签', width: '20%'}
-        , {field: 'description', title: '内容描述', width: '20%'}
-        , {field: 'content', title: '文章内容', width: '15%'}
-        , {field: 'createDate', title: '创建日期', width: '10%', sort: true}
+        , {field: 'alter_date', title: '修改日期', width: '15%'}
+        , {field: 'create_date', title: '创建日期', width: '10%', sort: true}
     ]]
 }
 
@@ -37,14 +37,12 @@ function openLayer(content) {
     layui.use('layer', function () {
         let layer = layui.layer;
         layer.open({
-            type: 1,
+            type: 2,
             title: '文章内容',
             shadeClose: true,
             offset: 'auto',
-            area: 'auto',
-            maxWidth: 800,
-            maxHeight: 480,
-            content: content.content + '',
+            area: ['80%', '86%'],
+            content: ['/article/detail?aid=' + content.id],
             btn: ['提交', '退回'],
             btn1: function (index, layero) {
                 updateState(content.id, 1);
@@ -116,9 +114,10 @@ function searchByClick() {
         tableReload(obj);
     });
 }
+
 function searchByEnter() {
     $("#searchInput").on('keydown', function (e) {
-        if(e.keyCode === 13){
+        if (e.keyCode === 13) {
             let s = $("#searchInput").val();
             let obj = {};
             obj.title = s;

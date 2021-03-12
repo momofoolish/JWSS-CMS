@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jwss.cms.dao.article.TbArticleDao">
+  <resultMap id="BaseResultMap" type="com.jwss.cms.model.article.TbArticle">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="author_id" jdbcType="VARCHAR" property="authorId" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="sort_id" jdbcType="INTEGER" property="sortId" />
+    <result column="alter_date" jdbcType="TIMESTAMP" property="alterDate" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="likes_number" jdbcType="INTEGER" property="likesNumber" />
+    <result column="reads_number" jdbcType="INTEGER" property="readsNumber" />
+    <result column="comment_number" jdbcType="INTEGER" property="commentNumber" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, author_id, title, description, content, cover, sort_id, alter_date, create_date,
+    likes_number, reads_number, comment_number, `state`, `label`
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_article
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+<!-- 分页查询 -->
+  <select id="selectByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_article
+    order by create_date
+    limit #{total,jdbcType=INTEGER} offset #{index,jdbcType=INTEGER}
+  </select>
+
+  <!-- 分页查询拓展 -->
+  <select id="selectBySearch" resultMap="BaseResultMap">
+    select
+    <foreach collection="cols" index="index" item="item" separator=",">
+      ${item}
+    </foreach>
+    from tb_article,tb_user tu
+    where title like concat('%',#{keyWord,jdbcType=VARCHAR},'%')
+    left join tu.name on tu.id = tb_article.author_id
+    order by create_date
+    limit #{total,jdbcType=INTEGER} offset #{index,jdbcType=INTEGER}
+  </select>
+
+  <!-- 表格分页查询 -->
+  <select id="selectByTable" resultType="java.util.Map">
+    select tb_article.id, title, tb_user.name as author, tb_article_sort.name as sort, label, alter_date, create_date
+    from tb_article
+    left join tb_user on tb_user.ID=tb_article.author_id
+    left join tb_article_sort on tb_article_sort.ID=tb_article.sort_id
+    where title like concat('%',#{keyWord,jdbcType=VARCHAR},'%')
+    limit #{total,jdbcType=INTEGER} offset #{index,jdbcType=INTEGER}
+  </select>
+
+  <!-- 表格分页查询（状态为待审核） -->
+  <select id="selectByTableExam" resultType="java.util.Map">
+    select tb_article.id, title, tb_user.name as author, tb_article_sort.name as sort, label, alter_date, create_date
+    from tb_article
+    left join tb_user on tb_user.ID=tb_article.author_id
+    left join tb_article_sort on tb_article_sort.ID=tb_article.sort_id
+    where title like concat('%',#{keyWord,jdbcType=VARCHAR},'%')
+    and tb_article.state = #{state,jdbcType=INTEGER}
+    limit #{total,jdbcType=INTEGER} offset #{index,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tb_article
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jwss.cms.model.article.TbArticle" useGeneratedKeys="true">
+    insert into tb_article (author_id, title, description,
+      content, cover, sort_id,
+      alter_date, create_date, likes_number,
+      reads_number, comment_number, `state`,
+      `label`)
+    values (#{authorId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+      #{content,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{sortId,jdbcType=INTEGER},
+      #{alterDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, #{likesNumber,jdbcType=INTEGER},
+      #{readsNumber,jdbcType=INTEGER}, #{commentNumber,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},
+      #{label,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.jwss.cms.model.article.TbArticle" useGeneratedKeys="true">
+    insert into tb_article
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="cover != null">
+        cover,
+      </if>
+      <if test="sortId != null">
+        sort_id,
+      </if>
+      <if test="alterDate != null">
+        alter_date,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="likesNumber != null">
+        likes_number,
+      </if>
+      <if test="readsNumber != null">
+        reads_number,
+      </if>
+      <if test="commentNumber != null">
+        comment_number,
+      </if>
+      <if test="state != null">
+        `state`,
+      </if>
+      <if test="label != null">
+        `label`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="authorId != null">
+        #{authorId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="sortId != null">
+        #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="alterDate != null">
+        #{alterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likesNumber != null">
+        #{likesNumber,jdbcType=INTEGER},
+      </if>
+      <if test="readsNumber != null">
+        #{readsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentNumber != null">
+        #{commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jwss.cms.model.article.TbArticle">
+    update tb_article
+    <set>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="cover != null">
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="sortId != null">
+        sort_id = #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="alterDate != null">
+        alter_date = #{alterDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="likesNumber != null">
+        likes_number = #{likesNumber,jdbcType=INTEGER},
+      </if>
+      <if test="readsNumber != null">
+        reads_number = #{readsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="commentNumber != null">
+        comment_number = #{commentNumber,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        `state` = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="label != null">
+        `label` = #{label,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jwss.cms.model.article.TbArticle">
+    update tb_article
+    set author_id = #{authorId,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      cover = #{cover,jdbcType=VARCHAR},
+      sort_id = #{sortId,jdbcType=INTEGER},
+      alter_date = #{alterDate,jdbcType=TIMESTAMP},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      likes_number = #{likesNumber,jdbcType=INTEGER},
+      reads_number = #{readsNumber,jdbcType=INTEGER},
+      comment_number = #{commentNumber,jdbcType=INTEGER},
+      `state` = #{state,jdbcType=INTEGER},
+      `label` = #{label,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

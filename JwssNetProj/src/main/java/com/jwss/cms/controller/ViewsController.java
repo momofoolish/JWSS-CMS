@@ -2,9 +2,9 @@ package com.jwss.cms.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jwss.cms.constant.RedisKeyType;
-import com.jwss.cms.entity.sqldata.Article;
 import com.jwss.cms.entity.sqldata.ArticleSort;
 import com.jwss.cms.entity.sqldata.Menu;
+import com.jwss.cms.model.article.TbArticle;
 import com.jwss.cms.service.article.ArticleService;
 import com.jwss.cms.service.article.SortService;
 import com.jwss.cms.service.menu.MenuService;
@@ -110,7 +110,10 @@ public class ViewsController {
     //文章详细
     @GetMapping("/article/detail")
     public String detail(Model model, @RequestParam String aid) {
-        Article article = articleService.queryDetail(aid);
+        TbArticle article = articleService.queryDetail(aid);
+        if(null == article){
+            return "/404";
+        }
         model.addAttribute("article", article);
         model.addAttribute("baseTitle", "Jwss");
         model.addAttribute("title", article.getTitle());

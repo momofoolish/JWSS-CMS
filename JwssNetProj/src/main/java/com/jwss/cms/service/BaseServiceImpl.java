@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import javax.annotation.Resource;
 
 public class BaseServiceImpl {
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Resource
     UserService userService;
 

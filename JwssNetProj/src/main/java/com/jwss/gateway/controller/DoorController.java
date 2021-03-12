@@ -1,11 +1,9 @@
 package com.jwss.gateway.controller;
 
 import com.jwss.cms.entity.sqldata.Menu;
-import com.jwss.cms.service.article.ArticleService;
-import com.jwss.cms.service.article.ArticleServiceImpl;
+import com.jwss.cms.service.article.ArticleServiceO;
 import com.jwss.cms.service.menu.MenuService;
 import com.jwss.cms.service.user.OnlineService;
-import com.jwss.cms.service.user.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jetbrains.annotations.NotNull;
@@ -24,7 +22,7 @@ public class DoorController {
     @Resource
     OnlineService onlineService;
     @Resource
-    ArticleServiceImpl articleServiceImpl;
+    ArticleServiceO articleServiceO;
 
     @GetMapping("/")
     public String index(Model model) {
@@ -32,7 +30,7 @@ public class DoorController {
         model.addAttribute("title", "首页");
         model.addAttribute("user", onlineService.userInfo());
         model.addAttribute("articleList",
-                articleServiceImpl.selectListByKey("create_date", 40, "id", "title",
+                articleServiceO.selectListByKey("create_date", 40, "id", "title",
                         "author_id", "cover"));
         renderMenu(model);
         return "index";

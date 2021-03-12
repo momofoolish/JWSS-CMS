@@ -5,7 +5,7 @@ import com.jwss.cms.constant.RedisKeyType;
 import com.jwss.cms.entity.render.Result;
 import com.jwss.cms.entity.sqldata.Article;
 import com.jwss.cms.service.article.ArticleService;
-import com.jwss.cms.service.article.ArticleServiceImpl;
+import com.jwss.cms.service.article.ArticleServiceO;
 import com.jwss.cms.util.Sys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -21,7 +21,7 @@ public class ArticleController {
     @Resource
     ArticleService articleService;
     @Resource
-    ArticleServiceImpl articleServiceImpl;
+    ArticleServiceO articleServiceO;
     @Resource
     HostConfig hostConfig;
     @Autowired
@@ -37,7 +37,7 @@ public class ArticleController {
         if (myKey == null || !myKey.equals(edKey)) {
             return new Result(-1, "请求失败");
         }
-        if (articleServiceImpl.isExist(title) <= 0) {
+        if (articleServiceO.isExist(title) <= 0) {
             return new Result(-1, "已存在此文章!!!");
         }
         Article article = new Article();
@@ -50,7 +50,7 @@ public class ArticleController {
             return new Result(0, "失败");
         }
         article.setSortId(Integer.parseInt(sort));
-        int flag = articleServiceImpl.insert(article);
+        int flag = articleServiceO.insert(article);
         if (flag != 0) {
             return new Result(1, "成功");
         } else {
@@ -61,25 +61,26 @@ public class ArticleController {
     //文章增删改查之 删
     @PostMapping("/author/del")
     public Result delete(@RequestParam String aid) {
-        return new Result(1, articleServiceImpl.delete(aid));
+        return new Result(1, articleServiceO.delete(aid));
     }
 
     //文章增删改查之 改
     @PostMapping("/author/alt")
     public Result alter(@RequestBody Article article) {
-        return new Result(1, articleServiceImpl.update(article));
+        return new Result(1, articleServiceO.update(article));
     }
 
     //文章增删改查之 查
     @GetMapping("/author/sel")
     public Result select(@RequestParam int index, @RequestParam int total) {
-        return new Result(1, articleServiceImpl.select(index, total));
+        return new Result(1, articleServiceO.select(index, total));
     }
 
     //文章搜索
     @GetMapping("/search")
     public Result search(@RequestParam String key) {
-        return articleService.searchArticleList(key);
+        //return articleService.searchArticleList(key);
+        return null;
     }
 
 }

@@ -79,7 +79,7 @@
     <div class="layui-body subject-div">
         <div class="layui-tab layui-tab-card my-tab" lay-allowclose="true" lay-filter="myTab">
             <ul class="layui-tab-title">
-                <li class="layui-this">网站首页<i class="layui-icon layui-unselect layui-tab-close">ဆ</i></li>
+                <li class="layui-this" id="index">网站首页<i class="layui-icon layui-unselect layui-tab-close">ဆ</i></li>
             </ul>
             <div class="layui-tab-content" style="height: 100%;">
                 <div class="layui-tab-item layui-show">

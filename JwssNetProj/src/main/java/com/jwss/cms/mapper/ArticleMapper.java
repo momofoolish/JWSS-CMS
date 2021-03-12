@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ArticleMapper extends BaseMapper<Article> {
+    List<Article> queryListByPage(int index, int total, String keyWord);
     Integer deleteBatch(@Param("idList") List<String> idList);
 }

@@ -8,13 +8,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
 @Configuration
-@MapperScan("com.jwss.cms.mapper")
+@MapperScan(basePackages = {"com.jwss.cms.mapper", "com.jwss.cms.dao"})
 public class MyBatitsConfig {
 
     @Bean
     public PaginationInterceptor paginationInterceptor() {
         PaginationInterceptor interceptor = new PaginationInterceptor();
-        interceptor.setLimit(8);
+        interceptor.setLimit(50);
         return interceptor;
     }
 }

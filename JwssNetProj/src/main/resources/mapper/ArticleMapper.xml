@@ -2,6 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jwss.cms.mapper.ArticleMapper">
 
+
+
+    <!--分页查询-->
+<!--    <select id="queryListByPage">-->
+<!--        select * from tb_article-->
+<!--        limit #{total} offset #{index}-->
+<!--    </select>-->
+
     <!--批量删除-->
     <delete id="deleteBatch" parameterType="java.util.List">
         delete from tb_article

@@ -12,11 +12,11 @@ window.onload = function () {
             , cols: [[ //表头
                 {field: 'id', type: 'checkbox', width: '5%', align: 'center', fixed: 'left'}
                 , {field: 'title', title: '标题', width: '20%'}
-                , {field: 'authorId', title: '作者ID', width: '15%'}
-                , {field: 'description', title: '内容描述', width: '20%'}
+                , {field: 'author', title: '作者', width: '15%'}
+                , {field: 'sort', title: '分类', width: '20%'}
                 , {field: 'label', title: '标签', width: '20%'}
-                , {field: 'alterDate', title: '修改日期', width: '10%', sort: true}
-                , {field: 'createDate', title: '创建日期', width: '10%', sort: true}
+                , {field: 'alter_date', title: '修改日期', width: '10%', sort: true}
+                , {field: 'create_date', title: '创建日期', width: '10%', sort: true}
             ]]
         });
 

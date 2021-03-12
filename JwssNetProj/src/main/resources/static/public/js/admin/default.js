@@ -45,7 +45,7 @@ function systemChartShow() {
     // 定时器
     setInterval(function () {
         setSystemInfoPie(option, myChart);
-    }, 30000);
+    }, 3 * 60 * 1000);
 }
 
 // 异步获取系统信息数据

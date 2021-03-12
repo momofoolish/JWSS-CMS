@@ -1,6 +1,6 @@
 package com.jwss.cms.controller.admin;
 
-import com.jwss.cms.service.article.ArticleServiceImpl;
+import com.jwss.cms.service.article.ArticleServiceO;
 import com.jwss.cms.service.comment.CommentService;
 import com.jwss.cms.service.user.OnlineService;
 import com.jwss.cms.service.user.UserService;
@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 @RequestMapping("/jwss/admin")
 public class AdminController {
     @Resource
-    ArticleServiceImpl articleServiceImpl;
+    ArticleServiceO articleServiceO;
     @Resource
     CommentService commentService;
     @Resource
@@ -32,7 +32,7 @@ public class AdminController {
 
     @GetMapping("/default")
     public String systemInfo(Model model){
-        model.addAttribute("articleList", articleServiceImpl.selectNewList(8));
+        model.addAttribute("articleList", articleServiceO.selectNewList(8));
         model.addAttribute("feedbackList", commentService.queryFeedBackList(5));
         model.addAttribute("userList", userService.queryUserNewList(8));
         return "admin/subject/default";

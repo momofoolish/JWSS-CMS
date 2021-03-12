@@ -1,64 +1,65 @@
 package com.jwss.cms.service.article;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jwss.cms.entity.ResultCode;
-import com.jwss.cms.entity.render.Result;
-import com.jwss.cms.entity.sqldata.Article;
-import com.jwss.cms.mapper.ArticleMapper;
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import javax.annotation.Resource;
+import com.jwss.cms.model.article.TbArticle;
+
 import java.util.List;
+import java.util.Map;
 
-@Service
-public class ArticleService {
-    @Resource
-    ArticleMapper articleMapper;
+public interface ArticleService {
 
     /**
-     * 随机3条博客文章
-     *
-     * @return 文章列表
+     * 增加
+     * @param article 增加的对象
+     * @return 1
      */
-    public Result randomArticleList() {
-        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("id");
-        int total = articleMapper.selectCount(queryWrapper);
-        //一个有 pageTotal 页，每页3条
-        int pageTotal = total / 3;
-        long pageNum = Math.round(Math.random() * (pageTotal - 1));
-        IPage<Article> page = new Page<>(pageNum, 3, total);
-        queryWrapper.select("id", "title", "description", "label", "cover", "create_date",
-                "reads_number","comment_number");
-        IPage<Article> articleList = articleMapper.selectPage(page, queryWrapper);
-        return new Result(1, articleList);
-    }
+    int insert(TbArticle article);
 
     /**
-     * 文章搜索
-     *
-     * @param key 索引值
-     * @return 文章列表
+     * 删除
+     * @param article 删除的对象
+     * @return 1
      */
-    public Result searchArticleList(String key) {
-        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
-        queryWrapper.like("title", key);
-        List<Article> articleList = articleMapper.selectList(queryWrapper);
-        if (articleList.size() == 0) {
-            queryWrapper.like("label", key);
-            articleList = articleMapper.selectList(queryWrapper);
-        }
-        return new Result(1, articleList);
-    }
+    int delete(TbArticle article);
 
     /**
-     * 查一篇文章细节
+     * 修改
+     * @param article 修改的对象
+     * @return 1
+     */
+    int update(TbArticle article);
+
+    /**
+     * 查询
+     * @param page 页码
+     * @param total 查询多少条？
+     * @return 对象列表
+     */
+    List<TbArticle> select(int page, int total);
+
+    /**
+     * 查询文章细节
      * @param aid 文章id
-     * @return 文章
+     * @return 文章实体
      */
-    public Article queryDetail(String aid) {
-        return articleMapper.selectById(aid);
-    }
+    TbArticle queryDetail(String aid);
+
+    /**
+     * 查询文章列表（含搜索、动态列名）
+     * @param page 页码
+     * @param total 条数
+     * @param keyWord 搜索关键词
+     * @param cols 列名
+     * @return 文章列表
+     */
+    List<TbArticle> selectBySearch(int page, int total, String keyWord, List<String> cols);
+
+    /**
+     * 分页查询（联表查询出作者名称，分类名称）
+     * @param page 页码
+     * @param total 条数
+     * @param keyWord 搜索关键词
+     * @param state 文章状态: -1, 查询全部, 0审核中...
+     * @return 表格集合
+     */
+    List<Map<String, String>> selectByTable(int page, int total, int state, String keyWord);
 }

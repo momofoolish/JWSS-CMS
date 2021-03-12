@@ -15,7 +15,7 @@ import javax.annotation.Resource;
 import java.util.*;
 
 @Service
-public class ArticleServiceImpl extends BaseServiceImpl implements BaseService {
+public class ArticleServiceO extends BaseServiceImpl implements BaseService {
     @Resource
     ArticleMapper articleMapper;
 
