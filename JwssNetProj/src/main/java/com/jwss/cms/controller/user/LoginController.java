@@ -1,6 +1,6 @@
 package com.jwss.cms.controller.user;
 
-import com.jwss.cms.entity.render.Result;
+import com.jwss.cms.model.render.Result;
 import com.jwss.cms.service.user.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

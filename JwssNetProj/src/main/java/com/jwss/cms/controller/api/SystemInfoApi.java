@@ -1,6 +1,6 @@
 package com.jwss.cms.controller.api;
 
-import com.jwss.cms.entity.render.Result;
+import com.jwss.cms.model.render.Result;
 import com.jwss.cms.util.SeverSystemInfo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

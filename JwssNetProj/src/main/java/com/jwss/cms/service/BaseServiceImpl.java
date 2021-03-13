@@ -1,6 +1,6 @@
 package com.jwss.cms.service;
 
-import com.jwss.cms.entity.sqldata.User;
+import com.jwss.cms.model.user.TbUser;
 import com.jwss.cms.service.user.UserService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -14,7 +14,7 @@ public class BaseServiceImpl {
     @Resource
     UserService userService;
 
-    protected User getUserInfo() {
+    protected TbUser getUserInfo() {
         Subject subject = SecurityUtils.getSubject();
         try {
             String account = subject.getPrincipal().toString();

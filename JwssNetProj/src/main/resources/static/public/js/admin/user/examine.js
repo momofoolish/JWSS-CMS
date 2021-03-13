@@ -33,8 +33,8 @@ function initDataTable() {
                 , {field: 'content', title: '内容', width: '15%'}
                 , {field: 'opinion', title: '意见', width: '15%'}
                 , {
-                    field: 'auditState', title: '当前状态', width: '10%', templet: function (v) {
-                        switch (v.auditState) {
+                    field: 'audit_state', title: '当前状态', width: '10%', templet: function (v) {
+                        switch (v.audit_state) {
                             case 0:
                                 return "待审批";
                             case 1:
@@ -46,9 +46,9 @@ function initDataTable() {
                         }
                     }
                 }
-                , {field: 'flowId', title: '流程ID', width: '10%'}
-                , {field: 'currentOperator', title: '当前操作人', width: '10%'}
-                , {field: 'createDate', title: '创建时间', width: '10%', sort: true}
+                , {field: 'flow_id', title: '流程ID', width: '10%'}
+                , {field: 'current_operator', title: '当前操作人', width: '10%'}
+                , {field: 'create_date', title: '创建时间', width: '10%', sort: true}
                 , {fixed: 'right', title: '操作', toolbar: '#barUser', width: '15%'}
             ]]
         });

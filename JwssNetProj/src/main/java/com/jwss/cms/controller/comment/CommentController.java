@@ -1,6 +1,6 @@
 package com.jwss.cms.controller.comment;
 
-import com.jwss.cms.entity.render.Result;
+import com.jwss.cms.model.render.Result;
 import com.jwss.cms.service.comment.CommentService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,13 +17,8 @@ public class CommentController {
 
     // 用户评论文章
     @PostMapping("/userSay")
-    public Result userComment(@RequestParam String content, @RequestParam int aid) {
-        return commentService.userComment(content, aid);
+    public Result userComment(@RequestParam String content, @RequestParam String aid) {
+        return new Result(1, commentService.userComment(content, aid));
     }
 
-    // 用户反馈
-    @PostMapping("/feedback")
-    public Result userFeedBack(@RequestParam String content) {
-        return commentService.userFeedBack(content);
-    }
 }

@@ -1,8 +1,9 @@
 package com.jwss.cms.service.user;
 
-import com.jwss.cms.entity.ResultCode;
-import com.jwss.cms.entity.render.Result;
-import com.jwss.cms.util.Sys;
+import com.jwss.cms.constant.ResultCode;
+import com.jwss.cms.model.render.Result;
+import com.jwss.cms.service.user.impl.UserServiceImpl;
+import com.jwss.cms.util.SystemUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -17,7 +18,7 @@ public class LoginService {
     @Autowired
     StringRedisTemplate redisTemplate;
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     /**
      * 用户登录服务
@@ -27,7 +28,7 @@ public class LoginService {
      * @return 返回用户信息
      */
     public Result userLogin(String account, String passWord, String code, HttpServletRequest request) {
-        String hostKey = Sys.getClientHost(request);
+        String hostKey = SystemUtils.getClientHost(request);
         String redisCode = redisTemplate.opsForValue().get(hostKey);
         if (!code.equals(redisCode)) {
             return new Result(0, ResultCode.VERIFITY_CODE_ERROR);
@@ -35,7 +36,7 @@ public class LoginService {
         //获得当前用户的登录对象
         Subject subject = SecurityUtils.getSubject();
         //用户名和密码令牌
-        UsernamePasswordToken token = new UsernamePasswordToken(account, Sys.md5(passWord));
+        UsernamePasswordToken token = new UsernamePasswordToken(account, SystemUtils.md5(passWord));
         //异常捕捉登录失败消息
         try {
             //记住我

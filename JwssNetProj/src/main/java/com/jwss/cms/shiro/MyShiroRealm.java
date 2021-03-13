@@ -1,7 +1,7 @@
 package com.jwss.cms.shiro;
 
-import com.jwss.cms.entity.sqldata.User;
-import com.jwss.cms.service.user.UserService;
+import com.jwss.cms.model.user.TbUser;
+import com.jwss.cms.service.user.impl.UserServiceImpl;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -17,7 +17,7 @@ import javax.annotation.Resource;
 
 public class MyShiroRealm extends AuthorizingRealm {
     @Resource
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
@@ -25,7 +25,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Subject subject = SecurityUtils.getSubject();
         //查询用户信息
-        User user = userService.getUserInfo(subject.getPrincipal().toString());
+        TbUser user = userService.getUserInfo(subject.getPrincipal().toString());
         info.addRole(user.getRoles());
         return info;
     }
@@ -36,7 +36,7 @@ public class MyShiroRealm extends AuthorizingRealm {
         UsernamePasswordToken myToken = (UsernamePasswordToken) token;
         if (!myToken.getUsername().equals("")) {
             //查用户密码进而匹配
-            User user = userService.getUserPassword(myToken.getUsername());
+            TbUser user = userService.getUserInfo(myToken.getUsername());
             if (!StringUtils.isEmpty(user)) {
                 ByteSource salt = new Md5Hash(user.getName()); //加盐处理
                 return new SimpleAuthenticationInfo(user.getAccount(), user.getPassword(), salt, myToken.getUsername());

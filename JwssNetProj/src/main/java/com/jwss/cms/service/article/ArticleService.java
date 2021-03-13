@@ -2,6 +2,8 @@ package com.jwss.cms.service.article;
 
 import com.jwss.cms.model.article.TbArticle;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -62,4 +64,29 @@ public interface ArticleService {
      * @return 表格集合
      */
     List<Map<String, String>> selectByTable(int page, int total, int state, String keyWord);
+
+    /**
+     * 批量删除
+     *
+     * @param map 文章id列表
+     * @return 返回受影响数量
+     */
+    Integer deleteBatch(Map<String, Object> map);
+
+    /**
+     * 更新文章状态
+     *
+     * @param aId   文章id
+     * @param state 提交类型
+     * @return 返回数据更新条数
+     */
+    int updateArticleState(String aId, int state);
+
+    /**
+     * 通过名称判断文章是否存在
+     *
+     * @param name 文章名称
+     * @return 0&1
+     */
+    int isExist(String name);
 }

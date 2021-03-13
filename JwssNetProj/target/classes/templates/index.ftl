@@ -12,7 +12,7 @@
                     <#list articleList as article>
                         <#if article.cover ??>
                             <li>
-                                <a href="/mapper/article/detail?aid=${mapper.article.id}">
+                                <a href="/article/detail?aid=${article.id}">
                                     <img src="${article.cover}" alt="${article.title}">
                                     <span>${article.title}</span>
                                 </a>
@@ -27,7 +27,7 @@
                     <#list articleList as article>
                         <#if article.cover ??>
                         <#else>
-                            <li><a href="/mapper/article/detail?aid=${mapper.article.id}">${article.title}</a></li>
+                            <li><a href="/article/detail?aid=${article.id}">${article.title}</a></li>
                         </#if>
                     </#list>
                 </ul>

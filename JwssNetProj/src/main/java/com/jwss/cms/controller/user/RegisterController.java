@@ -1,11 +1,12 @@
 package com.jwss.cms.controller.user;
 
 import com.google.code.kaptcha.Producer;
-import com.jwss.cms.entity.render.Result;
-import com.jwss.cms.entity.sqldata.User;
+import com.jwss.cms.constant.ResultCode;
+import com.jwss.cms.model.render.Result;
+import com.jwss.cms.model.user.TbUser;
 import com.jwss.cms.service.user.UserService;
 import com.jwss.cms.util.MyEncrypt;
-import com.jwss.cms.util.Sys;
+import com.jwss.cms.util.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,20 +38,24 @@ public class RegisterController {
     //	查询账号是否存在
     @PostMapping("accountExist")
     public Result accountExist(@RequestParam("account") String account) {
-        return userService.accountExist(account);
+        if (userService.accountExist(account) == 1) {
+            return new Result(1, "该账号可以使用");
+        } else {
+            return new Result(0, "该账号已存在");
+        }
     }
 
     //	生成图片验证码
     @GetMapping("verifyCode")
     public void verificationCode(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String capText = producer.createText();
-        String userIp = Sys.getClientHost(request);
+        String userIp = SystemUtils.getClientHost(request);
         redisTemplate.opsForValue().set(userIp, capText, 10, TimeUnit.MINUTES);
         logger.info("验证码：" + capText + "\t 用户IP：" + userIp);
         //创建验证码
         BufferedImage bi = producer.createImage(capText);
         //返回验证码图形给客户端
-        Sys.responseImageSetting(response);
+        SystemUtils.responseImageSetting(response);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(bi, "jpg", out);
         try {
@@ -65,12 +70,18 @@ public class RegisterController {
     public Result userRegister(@RequestParam("account") String account, @RequestParam("password") String password,
                                @RequestParam("code") String code, @RequestParam("key") String key, HttpServletRequest request) {
         if(key.equals(myEncrypt.encryptPlus("register"))){
-            User user = new User();
+            TbUser user = new TbUser();
             user.setAccount(account);
             user.setPassword(password);
-            return userService.register(user, code, request);
-        }else {
-            return new Result(0,"请求出错");
+            int resultCode = userService.register(user, code, request);
+            if(resultCode == -1){
+                return new Result(0, ResultCode.SERVER_ERROR);
+            }else if(resultCode == 0){
+                return new Result(0, "注册成功！");
+            }else if(resultCode == 1){
+                return new Result(0, ResultCode.USER_EXIST_NAME);
+            }
         }
+        return new Result(0, ResultCode.SERVER_ERROR);
     }
 }

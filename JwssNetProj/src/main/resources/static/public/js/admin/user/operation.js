@@ -34,7 +34,7 @@ function initDataTable() {
                 , {field: 'password', title: '密码', width: '15%'}
                 , {field: 'mail', title: '邮箱', width: '15%'}
                 , {field: 'roles', title: '角色', width: '10%', sort: true}
-                , {field: 'registerDate', title: '注册日期', width: '15%', sort: true}
+                , {field: 'register_date', title: '注册日期', width: '15%', sort: true}
                 , {fixed: 'right', title: '操作', toolbar: '#barUser', width: '15%'}
             ]]
         });

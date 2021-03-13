@@ -24,8 +24,8 @@
     <div class="jw-head-out">
         <ul class="jw-head-inLeft">
             <#list menuList as menu>
-                <#if menu.colType=='1'>
-                    <li><a href="${menu.colUrl}">${menu.colName}</a></li>
+                <#if menu.col_type==1>
+                    <li><a href="${menu.col_url}">${menu.col_name}</a></li>
                 </#if>
             </#list>
         </ul>
@@ -38,10 +38,10 @@
             </#if>
 
             <#list menuList as menu>
-                <#if menu.colType=='0'>
+                <#if menu.col_type==0>
                 <#-- 如果登录了就不渲染登录/注册菜单 -->
-                    <#if isLogin==menu.colState>
-                        <li><a href="${menu.colUrl}">${menu.colName}</a></li>
+                    <#if isLogin==menu.col_state>
+                        <li><a href="${menu.col_url}">${menu.col_name}</a></li>
                     </#if>
                 </#if>
             </#list>

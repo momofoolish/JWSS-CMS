@@ -1,6 +1,6 @@
 package com.jwss.cms.service.user;
 
-import com.jwss.cms.entity.sqldata.User;
+import com.jwss.cms.model.user.TbUser;
 import com.jwss.cms.service.BaseService;
 import com.jwss.cms.service.BaseServiceImpl;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class OnlineService extends BaseServiceImpl implements BaseService {
      *
      * @return 用户信息
      */
-    public User userInfo() {
+    public TbUser userInfo() {
         return getUserInfo();
     }
 }

@@ -1,9 +1,11 @@
 package com.jwss.cms.controller.admin;
 
-import com.jwss.cms.service.article.ArticleServiceO;
+import com.jwss.cms.service.article.ArticleService;
 import com.jwss.cms.service.comment.CommentService;
+import com.jwss.cms.service.comment.FeedbackService;
+import com.jwss.cms.service.comment.impl.CommentServiceImpl;
 import com.jwss.cms.service.user.OnlineService;
-import com.jwss.cms.service.user.UserService;
+import com.jwss.cms.service.user.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +17,11 @@ import javax.annotation.Resource;
 @RequestMapping("/jwss/admin")
 public class AdminController {
     @Resource
-    ArticleServiceO articleServiceO;
+    ArticleService articleService;
     @Resource
-    CommentService commentService;
+    FeedbackService feedbackService;
     @Resource
-    UserService userService;
+    UserServiceImpl userService;
     @Resource
     OnlineService onlineService;
 
@@ -32,8 +34,8 @@ public class AdminController {
 
     @GetMapping("/default")
     public String systemInfo(Model model){
-        model.addAttribute("articleList", articleServiceO.selectNewList(8));
-        model.addAttribute("feedbackList", commentService.queryFeedBackList(5));
+        model.addAttribute("articleList", articleService.select(1, 8));
+        model.addAttribute("feedbackList", feedbackService.selectByNew( 5));
         model.addAttribute("userList", userService.queryUserNewList(8));
         return "admin/subject/default";
     }

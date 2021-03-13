@@ -1,16 +1,14 @@
 package com.jwss.cms.controller;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.jwss.cms.constant.RedisKeyType;
-import com.jwss.cms.entity.sqldata.ArticleSort;
-import com.jwss.cms.entity.sqldata.Menu;
 import com.jwss.cms.model.article.TbArticle;
+import com.jwss.cms.model.menu.TbMenu;
 import com.jwss.cms.service.article.ArticleService;
 import com.jwss.cms.service.article.SortService;
 import com.jwss.cms.service.menu.MenuService;
 import com.jwss.cms.service.user.OnlineService;
 import com.jwss.cms.util.MyEncrypt;
-import com.jwss.cms.util.Sys;
+import com.jwss.cms.util.SystemUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jetbrains.annotations.NotNull;
@@ -76,10 +74,9 @@ public class ViewsController {
         model.addAttribute("baseTitle", "Jwss");
         model.addAttribute("title", "文章编辑中心");
         model.addAttribute("user", onlineService.userInfo());
-        IPage<ArticleSort> iPage = (IPage<ArticleSort>) sortService.select(1, 6);
-        model.addAttribute("articleSortList", iPage.getRecords());//分类列表
+        model.addAttribute("articleSortList", sortService.select(1, 6));//分类列表
         String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);
-        String host = Sys.getClientHost(request);
+        String host = SystemUtils.getClientHost(request);
         model.addAttribute("encryptConst", edKey);//加密钥匙
         redisTemplate.opsForValue().set(host + RedisKeyType.edKey, edKey,24, TimeUnit.HOURS);//设置redis缓存
         renderMenu(model);
@@ -142,7 +139,7 @@ public class ViewsController {
      * @param model Model
      */
     private void renderMenu(@NotNull Model model) {
-        List<Menu> menuList = menuService.queryMenuList();
+        List<TbMenu> menuList = menuService.selectAll();
         model.addAttribute("menuList", menuList);
         model.addAttribute("isLogin", isLogin());
     }

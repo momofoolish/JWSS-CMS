@@ -28,7 +28,11 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-<!-- 分页查询 -->
+  <select id="count" resultType="java.lang.Integer">
+    select count(1) from tb_article
+  </select>
+
+  <!-- 分页查询 -->
   <select id="selectByPage" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
@@ -37,15 +41,20 @@
     limit #{total,jdbcType=INTEGER} offset #{index,jdbcType=INTEGER}
   </select>
 
+  <select id="selectByName" resultType="java.lang.String" resultMap="BaseResultMap">
+    select id
+    from tb_article
+    where id = #{name,jdbcType=VARCHAR}
+  </select>
+
   <!-- 分页查询拓展 -->
   <select id="selectBySearch" resultMap="BaseResultMap">
     select
     <foreach collection="cols" index="index" item="item" separator=",">
       ${item}
     </foreach>
-    from tb_article,tb_user tu
+    from tb_article
     where title like concat('%',#{keyWord,jdbcType=VARCHAR},'%')
-    left join tu.name on tu.id = tb_article.author_id
     order by create_date
     limit #{total,jdbcType=INTEGER} offset #{index,jdbcType=INTEGER}
   </select>
@@ -75,6 +84,23 @@
     delete from tb_article
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+
+  <!--本人删除-->
+  <delete id="deleteByAuthor" parameterType="java.lang.String">
+    delete from tb_article
+    where id = #{id,jdbcType=VARCHAR}
+    and author_id = #{authorId,jdbcType=VARCHAR}
+  </delete>
+
+  <!--批量删除-->
+  <delete id="deleteBatch" parameterType="java.util.List">
+    delete from tb_article
+    where id in
+    <foreach item="item" collection="idList" separator="," open="(" close=")" index="">
+      #{item}
+    </foreach>
+  </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jwss.cms.model.article.TbArticle" useGeneratedKeys="true">
     insert into tb_article (author_id, title, description,
       content, cover, sort_id,
