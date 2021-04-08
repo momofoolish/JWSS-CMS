@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_article.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_article_sort.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_comment.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_cron.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_feedback.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_flow_base.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_friends.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_menu.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_user.sql" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/../SQL/JwssNet_tb_workflow.sql" dialect="MySQL" />
+  </component>
+</project>
