@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Controller
-public class ViewsController {
+public class GateWayController {
     @Resource
     MenuService menuService;
     @Resource
@@ -71,14 +71,15 @@ public class ViewsController {
     //文章编辑器页面
     @GetMapping("/author/editor")
     public String editor(Model model, HttpServletRequest request) {
+        String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);//生成加密钥匙
+        String host = SystemUtils.getClientHost(request);//获取用户真实IP
         model.addAttribute("baseTitle", "Jwss");
         model.addAttribute("title", "文章编辑中心");
         model.addAttribute("user", onlineService.userInfo());
         model.addAttribute("articleSortList", sortService.select(1, 6));//分类列表
-        String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);
-        String host = SystemUtils.getClientHost(request);
-        model.addAttribute("encryptConst", edKey);//加密钥匙
-        redisTemplate.opsForValue().set(host + RedisKeyType.edKey, edKey,24, TimeUnit.HOURS);//设置redis缓存
+        model.addAttribute("articleList", articleService.select(1, 8));
+        model.addAttribute("encryptConst", edKey);
+        redisTemplate.opsForValue().set(host + RedisKeyType.edKey, edKey, 24, TimeUnit.HOURS);//设置redis缓存
         renderMenu(model);
         return "content/editor";
     }
@@ -108,7 +109,7 @@ public class ViewsController {
     @GetMapping("/article/detail")
     public String detail(Model model, @RequestParam String aid) {
         TbArticle article = articleService.queryDetail(aid);
-        if(null == article){
+        if (null == article) {
             return "/404";
         }
         model.addAttribute("article", article);

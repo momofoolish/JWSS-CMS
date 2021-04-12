@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * tb_flow_base
- * @author 
+ * @author jwss
  */
 public class TbFlowBase implements Serializable {
     /**

@@ -8,6 +8,9 @@ window.onload = function () {
     const editor = new wangEditor('#editorDiv');
     editor.config.zIndex = 1;
     editor.config.onchangeTimeout = 500;
+    editor.config.uploadImgMaxSize = 3 * 1024 * 1024;
+    editor.config.uploadFileName = "articleMedia";
+    editor.config.uploadImgServer = "/api/file/upload/articleMedia";
     editor.config.onchange = function (html) {
         content = html;
     }

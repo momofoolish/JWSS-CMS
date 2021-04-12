@@ -30,32 +30,23 @@ public class SystemUtils {
     }
 
     /**
-     * 保存jpg图片文件
+     * 保存封面
      *
      * @param file MultipartFile文件
      * @return 文件路径
      */
-    public static String fileSave(MultipartFile file, HostConfig hostConfig) {
-        if (!file.isEmpty()) {
-            // 获取文件名并转成md5
-            String fileName = md5(file.getName() + new Date().getTime());
-            // 保存的文件路径
-            String filePath = hostConfig.getFilePath() + fileName + ".jpg";
-            System.out.println(file.getName());
-            try {
-                File localFile = new File(filePath);
-                BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(localFile));
-                out.write(file.getBytes());
-                out.flush();
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "error" + e.getMessage();
-            }
-            return hostConfig.getCoverMapping() + "/" + fileName + ".jpg";
-        } else {
-            return "empty";
-        }
+    public static String saveCover(MultipartFile file, HostConfig hostConfig) {
+        return fileSave(file, hostConfig.getCoverSavePath(), hostConfig.getCoverBrowserPath());
+    }
+
+    /**
+     * 保存文章内容的图片
+     *
+     * @param file MultipartFile文件
+     * @return 文件路径
+     */
+    public static String saveContentImage(MultipartFile file, HostConfig hostConfig) {
+        return fileSave(file, hostConfig.getContentSavePath(), hostConfig.getContentBrowserPath());
     }
 
     /**
@@ -115,16 +106,56 @@ public class SystemUtils {
 
     /**
      * uuid生成器
+     *
      * @return UUID字符串（除去“-”）
      */
     public static String uuid() {
         String u = UUID.randomUUID().toString();
-        String[] us=u.split("-");
-        StringBuilder stringBuilder=new StringBuilder();
+        String[] us = u.split("-");
+        StringBuilder stringBuilder = new StringBuilder();
         for (String s : us) {
             stringBuilder.append(s);
         }
         return stringBuilder.toString();
     }
 
+    /**
+     * 保存jpg图片文件
+     *
+     * @param file        MultipartFile文件
+     * @param savePath    保存路径
+     * @param browserPath 浏览路径
+     * @return 文件路径
+     */
+    private static String fileSave(MultipartFile file, String savePath, String browserPath) {
+        if (!file.isEmpty()) {
+            String fileNmeReal = file.getOriginalFilename();
+            //获取文件后缀
+            String suffix;
+            String[] fileNmeReals = fileNmeReal.split("\\.");
+            if (fileNmeReals.length > 0) {
+                suffix = "." + fileNmeReals[fileNmeReals.length - 1];
+            }else {
+                return "empty";
+            }
+            // 获取文件名并转成md5
+            String fileName = md5(fileNmeReal + new Date().getTime());
+            // 保存的文件路径
+            String filePath = savePath + fileName + suffix;
+            System.out.println(file.getName());
+            try {
+                File localFile = new File(filePath);
+                BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(localFile));
+                out.write(file.getBytes());
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "error" + e.getMessage();
+            }
+            return browserPath + "/" + fileName + suffix;
+        } else {
+            return "empty";
+        }
+    }
 }

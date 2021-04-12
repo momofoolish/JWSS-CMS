@@ -13,7 +13,7 @@ import java.util.*;
 @Service
 public class ArticleServiceImpl extends BaseServiceImpl implements ArticleService {
     @Resource
-    TbArticleDao articleDao;
+    private TbArticleDao articleDao;
 
     @Override
     public int insert(TbArticle article) {

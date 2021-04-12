@@ -7,12 +7,15 @@
     <@macros.Jquery></@macros.Jquery>
     <@encr.EncryptConst></@encr.EncryptConst>
     <@macros.Body>
-        <script type="text/javascript" src="http://res.vjwss.top/lib/wangEditor-4.5.0/wangEditor.min.js"></script>
+        <script type="text/javascript" src="/public/plus/wangEditor.min.js"></script>
 
     <#-- 内容编辑 -->
         <div class="view-editor">
             <ul class="article-list">
-                <li><h3>新建文件标题</h3><span>2020-12-22</span></li>
+                <li class="new-article"><h3>新建文章标题</h3><span>2020-12-22</span></li>
+                <#list articleList as article>
+                    <li class="other-article"><h3>${article.title}</h3><span>${article.createDate?string('yyyy-MM-dd')}</span></li>
+                </#list>
             </ul>
 
             <div style="width: 60%;padding: 1em;">
@@ -58,7 +61,7 @@
             </div>
         </div>
 
-        <script type="text/javascript" src="/public/js/view/articleEditor.js"></script>
+        <script type="text/javascript" src="/public/js/content/editor.js"></script>
         <link rel="stylesheet" href="/public/css/editor.css">
     </@macros.Body>
     <@macros.Foot></@macros.Foot>

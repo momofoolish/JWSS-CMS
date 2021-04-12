@@ -2,13 +2,11 @@ package com.jwss.cms.model.article;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * tb_article
  * @author jwss
  */
-@Data
 public class TbArticle implements Serializable {
     /**
      * ID
@@ -81,6 +79,122 @@ public class TbArticle implements Serializable {
     private String label;
 
     private static final long serialVersionUID = 1L;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAuthorId() {
+        return authorId;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getCover() {
+        return cover;
+    }
+
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    public Integer getSortId() {
+        return sortId;
+    }
+
+    public void setSortId(Integer sortId) {
+        this.sortId = sortId;
+    }
+
+    public Date getAlterDate() {
+        return alterDate;
+    }
+
+    public void setAlterDate(Date alterDate) {
+        this.alterDate = alterDate;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getLikesNumber() {
+        return likesNumber;
+    }
+
+    public void setLikesNumber(Integer likesNumber) {
+        this.likesNumber = likesNumber;
+    }
+
+    public Integer getReadsNumber() {
+        return readsNumber;
+    }
+
+    public void setReadsNumber(Integer readsNumber) {
+        this.readsNumber = readsNumber;
+    }
+
+    public Integer getCommentNumber() {
+        return commentNumber;
+    }
+
+    public void setCommentNumber(Integer commentNumber) {
+        this.commentNumber = commentNumber;
+    }
+
+    public Integer getState() {
+        return state;
+    }
+
+    public void setState(Integer state) {
+        this.state = state;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
 
     @Override
     public boolean equals(Object that) {

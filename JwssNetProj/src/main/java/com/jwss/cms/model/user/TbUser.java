@@ -2,13 +2,11 @@ package com.jwss.cms.model.user;
 
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Data;
 
 /**
  * tb_user
  * @author jwss
  */
-@Data
 public class TbUser implements Serializable {
     /**
      * UUID
@@ -66,6 +64,94 @@ public class TbUser implements Serializable {
     private Date register_date;
 
     private static final long serialVersionUID = 1L;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAccount() {
+        return account;
+    }
+
+    public void setAccount(String account) {
+        this.account = account;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getMail() {
+        return mail;
+    }
+
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Integer getReads_number() {
+        return reads_number;
+    }
+
+    public void setReads_number(Integer reads_number) {
+        this.reads_number = reads_number;
+    }
+
+    public Integer getLikes_number() {
+        return likes_number;
+    }
+
+    public void setLikes_number(Integer likes_number) {
+        this.likes_number = likes_number;
+    }
+
+    public Date getRegister_date() {
+        return register_date;
+    }
+
+    public void setRegister_date(Date register_date) {
+        this.register_date = register_date;
+    }
 
     @Override
     public boolean equals(Object that) {

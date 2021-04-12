@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * tb_comment
- * @author 
+ * @author jwss
  */
 public class TbComment implements Serializable {
     /**

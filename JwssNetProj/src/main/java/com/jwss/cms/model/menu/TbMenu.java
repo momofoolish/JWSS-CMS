@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 /**
  * tb_menu
- * @author
+ * @author jwss
  */
 public class TbMenu implements Serializable {
     private Integer id;

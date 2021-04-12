@@ -41,7 +41,7 @@ public class ArticleController {
         article.setTitle(title);
         article.setContent(content);
         if(null != cover && !cover.isEmpty()){
-            article.setCover(SystemUtils.fileSave(cover, hostConfig));
+            article.setCover(SystemUtils.saveCover(cover, hostConfig));
         }
         if (sort.equals("分类")) {
             return new Result(0, "失败");

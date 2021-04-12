@@ -44,6 +44,7 @@ class ApiShiroFilters {
         filterCDMap.put("/api/user/**", "anon");
         //静态资源放行
         filterCDMap.put("/public/**", "anon");
+        filterCDMap.put("/res/**", "anon");
         //角色授权过滤器
         filterCDMap.put("/api/comment/userSay", "roles[user,author]");
         filterCDMap.put("/api/comment/feedback", "roles[user,author]");

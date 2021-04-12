@@ -102,12 +102,13 @@
   </delete>
 
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.jwss.cms.model.article.TbArticle" useGeneratedKeys="true">
-    insert into tb_article (author_id, title, description,
+    insert into tb_article (id, author_id, title, description,
       content, cover, sort_id,
       alter_date, create_date, likes_number,
       reads_number, comment_number, `state`,
       `label`)
-    values (#{authorId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
+    values (#{id,jdbcType=VARCHAR}, #{authorId,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR},
       #{content,jdbcType=VARCHAR}, #{cover,jdbcType=VARCHAR}, #{sortId,jdbcType=INTEGER},
       #{alterDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP}, #{likesNumber,jdbcType=INTEGER},
       #{readsNumber,jdbcType=INTEGER}, #{commentNumber,jdbcType=INTEGER}, #{state,jdbcType=INTEGER},

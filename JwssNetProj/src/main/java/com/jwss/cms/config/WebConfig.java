@@ -19,12 +19,17 @@ import java.util.List;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Resource
-    HostConfig hostConfig;
+    private HostConfig hostConfig;
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(hostConfig.getCoverMapping() + "/**")
-                .addResourceLocations("file:" + hostConfig.getFilePath());
+        registry.addResourceHandler(
+                hostConfig.getCoverBrowserPath() + "/**",
+                hostConfig.getContentBrowserPath() + "/**"
+        ).addResourceLocations(
+                "file:" + hostConfig.getCoverSavePath(),
+                "file:" + hostConfig.getContentSavePath()
+        );
     }
 
     @Override

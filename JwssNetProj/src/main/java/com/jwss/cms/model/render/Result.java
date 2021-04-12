@@ -1,10 +1,10 @@
 package com.jwss.cms.model.render;
 
-import lombok.Data;
-
 import java.util.Date;
 
-@Data
+/**
+ * @author jwss
+ */
 public class Result {
     public Result(){}
 
@@ -12,6 +12,30 @@ public class Result {
         this.code = code;
         this.content = content;
         this.date = new Date();
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public Object getContent() {
+        return content;
+    }
+
+    public void setContent(Object content) {
+        this.content = content;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     private int code;

@@ -5,7 +5,7 @@ import java.util.Date;
 
 /**
  * tb_feedback
- * @author 
+ * @author jwss
  */
 public class TbFeedback implements Serializable {
     private Integer id;
