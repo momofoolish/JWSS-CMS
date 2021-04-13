@@ -56,6 +56,34 @@ window.onload = function () {
         });
     });
 
+    //提交
+    $("#saveBtn").on('click', function () {
+        //判断内容是否为空
+        let warn = "<span style='color: orange;font-size: 28px'>警告</span>";
+        jwssAlertCallBack(warn, "未开发", "", "关闭", function () {
+            $("#JwssAlert").hide();
+        });
+    });
+
+    //预览
+    $("#previewBtn").on('click', function () {
+        let warn = "<span style='color: orange;font-size: 28px'>警告</span>";
+        //判断内容是否为空
+        if (content === undefined || content.length < 32) {
+            jwssAlert(warn, "内容过少，至少16个字", "", "关闭");
+        } else {
+            jwssPreview(content);
+        }
+    });
+
+    //放弃编辑
+    $("#giveUpBtn").on('click', function () {
+        let warn = "<span style='color: orange;font-size: 28px'>确定放弃编辑？</span>";
+        jwssAlertCallBack(warn, "放弃编辑，你将丢失本页面未保存内容。", "", "确定", function () {
+            window.location.href = "/";
+        });
+    });
+
     //图片上传
     $("#uploadInput").on('change', function (event) {
         compressImage(event.target.files[0], function (file) {
@@ -144,9 +172,33 @@ const jwssAlert = (t, c, ti, b) => {
     jwssAlertEle.show();
 }
 
+// 弹窗使用 回调版本
+const jwssAlertCallBack = (t, c, ti, b, func) => {
+    $("#pTit").html(t);
+    $("#pMsg").html(c);
+    $("#pTip").html(ti);
+    $("#pBtn").html(b);
+    let jwssAlertEle = $("#JwssAlert");
+    jwssAlertEle.css({'display': 'flex'});
+    jwssAlertEle.show();
+    $("#JwssAlert button").on('click', func);
+}
+
+// 预览窗口
+const jwssPreview = (c) => {
+    $("#preMsg").html(c);
+    let jwssPreviewEle = $("#JwssPreview");
+    jwssPreviewEle.css({'display': 'flex'});
+    jwssPreviewEle.show();
+}
+
 // 弹窗按钮事件
 const alertButtonHandle = () => {
     $("#JwssAlert button").on('click', function () {
         $("#JwssAlert").hide();
+    });
+
+    $("#JwssPreview button").on('click', function () {
+        $("#JwssPreview").hide();
     });
 }

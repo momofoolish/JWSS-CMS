@@ -12,9 +12,11 @@
     <#-- 内容编辑 -->
         <div class="view-editor">
             <ul class="article-list">
-                <li class="new-article"><h3>新建文章标题</h3><span>2020-12-22</span></li>
+                <li class="new-article"><h3>新建文章标题</h3><span>${nowDate?string('yyyy/MM/dd')}</span></li>
                 <#list articleList as article>
-                    <li class="other-article"><h3>${article.title}</h3><span>${article.createDate?string('yyyy-MM-dd')}</span></li>
+                    <li class="other-article">
+                        <h3>${article.title}</h3><span>${article.createDate?string('yyyy/MM/dd')}</span>
+                    </li>
                 </#list>
             </ul>
 
@@ -74,3 +76,9 @@
     <p id="pTip"> 提示 </p>
     <button id="pBtn"> 确定</button>
 </@coms.Alert>
+
+<#--弹出层-->
+<@coms.Preview>
+    <p id="preMsg" style="overflow: auto;"> 内容 </p>
+    <button id="preBtn" style="width: 91px"> 关闭预览 </button>
+</@coms.Preview>

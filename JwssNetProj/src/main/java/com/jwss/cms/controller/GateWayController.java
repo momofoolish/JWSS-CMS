@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -40,6 +41,7 @@ public class GateWayController {
     @Autowired
     StringRedisTemplate redisTemplate;
 
+    //登录页面
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("baseTitle", "Jwss");
@@ -51,12 +53,14 @@ public class GateWayController {
         }
     }
 
+    //退出登录
     @GetMapping("/logout")
     public String logout(Model model) {
         model.addAttribute("isLogin", "no");
         return "user/login";
     }
 
+    //注册
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("baseTitle", "Jwss");
@@ -73,17 +77,19 @@ public class GateWayController {
     public String editor(Model model, HttpServletRequest request) {
         String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);//生成加密钥匙
         String host = SystemUtils.getClientHost(request);//获取用户真实IP
-        model.addAttribute("baseTitle", "Jwss");
+        model.addAttribute("baseTitle", "JWSS");
         model.addAttribute("title", "文章编辑中心");
         model.addAttribute("user", onlineService.userInfo());
         model.addAttribute("articleSortList", sortService.select(1, 6));//分类列表
         model.addAttribute("articleList", articleService.select(1, 8));
         model.addAttribute("encryptConst", edKey);
+        model.addAttribute("nowDate", new Date());
         redisTemplate.opsForValue().set(host + RedisKeyType.edKey, edKey, 24, TimeUnit.HOURS);//设置redis缓存
         renderMenu(model);
         return "content/editor";
     }
 
+    //作者中心
     @GetMapping("/author")
     public String author(Model model, @RequestParam(required = false) Integer p) {
         if (!StringUtils.isEmpty(p)) {
