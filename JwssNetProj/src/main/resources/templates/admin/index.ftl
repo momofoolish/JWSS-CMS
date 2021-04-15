@@ -55,14 +55,14 @@
                     <a class="layui-this" href="javascript:">默认首页</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:">文章管理</a>
+                    <a href="javascript:">文章模块</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:">管理员操作</a></dd>
-                        <dd><a href="javascript:">审核列表</a></dd>
+                        <dd><a href="javascript:">内容管理</a></dd>
+                        <dd><a href="javascript:">内容审核</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:">用户管理</a>
+                    <a href="javascript:">用户模块</a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:">网站用户</a></dd>
                         <dd><a href="javascript:">作者申请</a></dd>
@@ -79,7 +79,9 @@
     <div class="layui-body subject-div">
         <div class="layui-tab layui-tab-card my-tab" lay-allowclose="true" lay-filter="myTab">
             <ul class="layui-tab-title">
-                <li class="layui-this" id="index">网站首页<i class="layui-icon layui-unselect layui-tab-close">ဆ</i></li>
+                <li class="layui-this" lay-id="默认首页">
+                    网站首页<i class="layui-icon layui-unselect layui-tab-close">ဆ</i>
+                </li>
             </ul>
             <div class="layui-tab-content" style="height: 100%;">
                 <div class="layui-tab-item layui-show">

@@ -1,19 +1,35 @@
+<#--自定义输入框-->
 <#macro Input>
     <link rel="stylesheet" href="/public/js/component/input/input.css">
     <script src="/public/js/component/input/input.js" type="text/babel"></script>
 </#macro>
 
+<#--自定义按钮-->
 <#macro Button>
     <link rel="stylesheet" href="/public/js/component/button/button.css">
     <script src="/public/js/component/button/button.js" type="text/babel"></script>
 </#macro>
 
+<#--弹窗-->
 <#macro Alert>
     <div id="JwssAlert" style="z-index: 9999;background: rgba(0, 0, 0, 0.6);position: fixed;outline: 0;
         width: 100%;height: 100%;-webkit-overflow-scrolling: touch;overflow: hidden;
         left: 0;top: 0;right: 0;bottom: 0;display: none;justify-content: center;
         align-items: center;">
         <div style="width: 330px;height: 330px;display: flex;align-items: center;flex-direction: column;
+            background: #fff9ec;border-radius: 6px;justify-content: center;">
+            <#nested>
+        </div>
+    </div>
+</#macro>
+
+<#--预览内容-->
+<#macro Preview>
+    <div id="JwssPreview" style="z-index: 9999;background: rgba(0, 0, 0, 0.6);position: fixed;outline: 0;
+        width: 100%;height: 100%;-webkit-overflow-scrolling: touch;overflow: hidden;
+        left: 0;top: 0;right: 0;bottom: 0;display: none;justify-content: center;
+        align-items: center;">
+        <div style="width: 90%;height: 90%;display: flex;align-items: center;flex-direction: column;
             background: #fff9ec;border-radius: 6px;justify-content: center;">
             <#nested>
         </div>
