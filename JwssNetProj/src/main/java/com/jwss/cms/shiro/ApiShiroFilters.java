@@ -39,7 +39,7 @@ class ApiShiroFilters {
         filterCDMap.put("/api/author", "anon");
         filterCDMap.put("/api/article/search", "anon");
         filterCDMap.put("/api/article/detail", "anon");
-        filterCDMap.put("/api/login/formLogin", "anon");
+        filterCDMap.put("/api/login/**", "anon");
         filterCDMap.put("/api/register/**", "anon");
         filterCDMap.put("/api/user/**", "anon");
         //静态资源放行

@@ -1,5 +1,6 @@
 package com.jwss.cms.service.user;
 
+import com.jwss.cms.constant.RedisKeyType;
 import com.jwss.cms.constant.ResultCode;
 import com.jwss.cms.model.render.Result;
 import com.jwss.cms.service.user.impl.UserServiceImpl;
@@ -16,9 +17,9 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class LoginService {
     @Autowired
-    StringRedisTemplate redisTemplate;
+    private StringRedisTemplate redisTemplate;
     @Autowired
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
 
     /**
      * 用户登录服务
@@ -28,8 +29,9 @@ public class LoginService {
      * @return 返回用户信息
      */
     public Result userLogin(String account, String passWord, String code, HttpServletRequest request) {
-        String hostKey = SystemUtils.getClientHost(request);
-        String redisCode = redisTemplate.opsForValue().get(hostKey);
+        String host = SystemUtils.getClientHost(request);
+        String redisKey = host + RedisKeyType.loginKey;
+        String redisCode = redisTemplate.opsForValue().get(redisKey);
         if (!code.equals(redisCode)) {
             return new Result(0, ResultCode.VERIFITY_CODE_ERROR);
         }

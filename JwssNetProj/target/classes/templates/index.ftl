@@ -3,7 +3,7 @@
 <@macros.Base>
     <@macros.Head></@macros.Head>
     <@macros.Body>
-        <link rel="stylesheet" href="/public/css/door/index.css">
+        <link rel="stylesheet" href="/public/css/portal/index.css">
 
         <div class="jwss-box-out">
             <#--左侧有封面列表-->

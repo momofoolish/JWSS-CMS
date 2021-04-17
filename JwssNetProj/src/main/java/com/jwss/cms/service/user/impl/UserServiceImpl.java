@@ -2,6 +2,7 @@ package com.jwss.cms.service.user.impl;
 
 import java.util.*;
 
+import com.jwss.cms.constant.RedisKeyType;
 import com.jwss.cms.dao.user.TbUserDao;
 
 import com.jwss.cms.model.user.TbUser;
@@ -52,9 +53,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public int register(TbUser user, String verifyCode, HttpServletRequest request) {
         String userIp = SystemUtils.getClientHost(request);
-        String redisCode = redisTemplate.opsForValue().get(userIp);
+        String redisKey = userIp + RedisKeyType.registerKey;
+        String redisCode = redisTemplate.opsForValue().get(redisKey);
         if (!verifyCode.equals(redisCode)) {
-            return 0;
+            return -2;
         }
         String passWord = user.getPassword();
         String account = user.getAccount();
@@ -74,14 +76,15 @@ public class UserServiceImpl implements UserService {
             user.setRoles("user");
             user.setRegister_date(new Date());
             //向数据库插入数据
-            int flag = userDao.insert(user);
+            int flag = userDao.insertByUUID(user);
+            //大于0插入成功
             if (flag > 0) {
                 return flag;
             } else {
                 return -1;
             }
         } else {
-            return 1;
+            return -3;
         }
     }
 

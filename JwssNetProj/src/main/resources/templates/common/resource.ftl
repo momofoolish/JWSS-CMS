@@ -59,26 +59,8 @@
     <div style="text-align: center;">底部</div>
 </#macro>
 
-<#--reactjs-->
-<#macro ReactJs>
-    <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
-</#macro>
-
-<#--jquery boostrop框架-->
-<#macro JqBootStroop>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
-    <script type="text/javascript" src="http://lib.sinaapp.com/js/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="http://lib.sinaapp.com/js/bootstrap/4.3.1/css/bootstrap.min.css">
-</#macro>
-
 <#macro JqueryLayui>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="/public/plus/jquery/jquery.js"></script>
     <script type="text/javascript" src="/public/plus/layui/layui.js"></script>
     <link rel="stylesheet" href="/public/plus/layui/css/layui.css">
-</#macro>
-
-<#macro Jquery>
-    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
 </#macro>

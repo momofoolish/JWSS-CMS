@@ -19,4 +19,6 @@ public interface TbUserDao extends MyBatisBaseDao<TbUser, String> {
     List<TbUser> selectByNew(int total, List<String> cols);
 
     int deleteBatch(List<String> idList);
+
+    int insertByUUID(TbUser tbUser);
 }

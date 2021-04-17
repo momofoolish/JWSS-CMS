@@ -1,5 +1,92 @@
-let key = "www.vjwss.top";
-let getNowData = () => {
+const key = "www.vjwss.top";
+
+window.onload = function () {
+    changeVerifyCode();
+}
+
+const loginTipShow = () => {
+    onClickToRegister();
+}
+
+//提交注册按钮
+const onClickToRegister = () => {
+    let account = $("#userNameInput").val();
+    let password = $("#passwordInput").val();
+    let verifyCode = $("#verifyInput").val();
+    let tipP = $("#tipModal p");
+
+    //校验
+    if (account === '' || account.length < 6 || account.length > 16) {
+        tipP.html(getTipType("账号必须在6~16间", "error"));
+        return;
+    }
+    if (password === '' || password.length < 6 || password.length > 16) {
+        tipP.html(getTipType("密码必须在6~16间", "error"));
+        return;
+    }
+
+    if (verifyCode === '') {
+        tipP.html(getTipType("请输入验证码", "error"));
+        return;
+    }
+
+    tipP.html(getTipType("登录中...", "info"));
+    //发起http请求
+    toHttpLogin(account, password, verifyCode);
+}
+
+//注册表单内容提交
+const toHttpLogin = (account, password, verifyCode) => {
+    let url = "/api/login/formLogin";
+    let formData = {
+        account: account,
+        password: password,
+        code: verifyCode,
+        key: getNowData()
+    }
+    $.ajax({
+        url: url,
+        method: 'post',
+        data: formData,
+        success: function (response) {
+            if (response.code === 1) {
+                let tip = "登录成功！两秒后自动跳转到首页, 也可以";
+                let quickJump = "<a href='/'>立即跳转</a>";
+                $("#tipModal p").html(getTipType(tip + quickJump, "info"));
+                setTimeout(function () {
+                    window.location.href = preUrl;
+                }, 2000);
+            } else {
+                if (response.content !== '') {
+                    $("#tipModal p").html(getTipType(response.content, "error"));
+                }
+            }
+        }
+    });
+}
+
+//更换验证码
+const changeVerifyCode = () => {
+    let verifyCodeSpan = $("#verifyCode");
+    verifyCodeSpan.on('click', () => {
+        verifyCodeSpan.html('');
+        verifyCodeSpan.html('<img src="/api/login/verifyCode" class="verify-code" alt="验证码">');
+    });
+}
+
+//获取提示类型,error/info
+const getTipType = (content, type) => {
+    let s = '';
+    if (type === "error") {
+        s = '<div class="alert alert-danger" role="alert">' + content + '</div>';
+    } else if (type === "info") {
+        s = '<div class="alert alert-success" role="alert">' + content + '</div>';
+    }
+    return s;
+}
+
+//获取当前时间
+const getNowData = () => {
     let Dates = new Date();
     let Y = Dates.getFullYear();
     let M = Dates.getMonth() + 1;
@@ -8,99 +95,4 @@ let getNowData = () => {
     let t = Y + (M < 10 ? "/0" : "/") + M + (D < 10 ? "/0" : "/") + D + " " + (H < 10 ? "0" : "") + H;
     let k = "register" + key + t;
     return md5(k);
-}
-
-class Register extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {account: '', password: '', verifyCode: '', tipAcc: '', tipPas: '', tipPaa: ''};
-    }
-
-    //提交注册按钮
-    onClickToRegister = () => {
-        let {account, password, verifyCode} = this.state;
-        if (account === '' || account.length < 6 || account.length > 16) {
-            alert("账号必须在6~16间");
-            return;
-        }
-        if (password === '' || password.length < 6 || password.length > 16) {
-            alert("密码必须在6~16间");
-            return;
-        }
-        //发起http请求
-        this.httpLogin(account, password, verifyCode);
-    }
-
-    //注册表单内容提交
-    httpLogin = (a, p, v) => {
-        console.log(a, p, v);
-        let url = "/api/login/formLogin";
-        let formData = {
-            account: a,
-            password: p,
-            code: v,
-            key: getNowData()
-        }
-        $.ajax({
-            url: url,
-            method: 'post',
-            data: formData,
-            success: function (response) {
-                console.log(response);
-                if (response.code === 1) {
-                    console.log("登录成功");
-                    window.location.href = "/";
-                } else {
-                    alert("登录失败,账号或密码错误");
-                }
-            }
-        });
-    }
-
-    onAccountChange = (e) => {
-        let acc = e.target.value;
-        this.setState({account: acc, tipAcc: '你输入了账号'});
-    }
-
-    onPasswordChange = (e) => {
-        let pas = e.target.value;
-        this.setState({password: pas, tipPas: '你输入了密码'});
-    }
-
-    onVerifyCodeChange = (e) => {
-        let ver = e.target.value;
-        this.setState({verifyCode: ver});
-    }
-
-    render() {
-        const {tipAcc, tipPas} = this.state;
-        return (
-            <div className="containerForm">
-                <div className="card shadow p-3 mb-5 bg-white rounded">
-                    <div style={{height: '100%'}}>
-                        <p>欢迎━(*｀∀´*)ノ亻!</p>
-                        <p>{tipAcc === '' ? '' : tipAcc}</p>
-                        <p>{tipPas === '' ? '' : tipPas}</p>
-                    </div>
-                    <a href="/register">前往注册-></a>
-                </div>
-
-                <div className="card shadow p-3 mb-5 bg-white rounded cardStyle">
-                    <label style={{marginTop: '1em', paddingLeft: '6px', paddingRight: '1px'}}>
-                        <Input height={'3em'} width={'100%'} placeholder={'输入账号'} onChange={this.onAccountChange}/>
-                    </label>
-                    <label style={{marginTop: '1em', paddingLeft: '6px', paddingRight: '1px'}}>
-                        <Input height={'3em'} width={'100%'} placeholder={'输入密码'} onChange={this.onPasswordChange}
-                               type={'password'}/>
-                    </label>
-                    <label style={{marginTop: '1em', paddingLeft: '6px', paddingRight: '1px'}}>
-                        <Input height={'3em'} width={'50%'} placeholder={'输入验证码'} onChange={this.onVerifyCodeChange}/>
-                        <img src={'/api/register/verifyCode'} style={{width: '50%'}}
-                             alt="验证码加载ing"/>
-                    </label>
-                    <Button value="登录" height={'3em'} onClick={this.onClickToRegister}/>
-                </div>
-            </div>
-        )
-    }
 }

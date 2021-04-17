@@ -148,6 +148,18 @@
       </if>
     </trim>
   </insert>
+
+  <insert id="insertByUUID" parameterType="com.jwss.cms.model.user.TbUser">
+    insert into tb_user (id, account, `password`, roles,
+      `name`, sign, mail, avatar,
+      reads_number, likes_number, register_date
+      )
+    values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{roles,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{sign,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR},
+      #{reads_number,jdbcType=INTEGER}, #{likes_number,jdbcType=INTEGER}, #{register_date,jdbcType=TIMESTAMP}
+      )
+  </insert>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.jwss.cms.model.user.TbUser">
     update tb_user
     <set>

@@ -1,15 +1,23 @@
 package com.jwss.cms.util;
 
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
+import com.google.code.kaptcha.Producer;
 import com.jwss.cms.constant.HostConfig;
+import com.jwss.cms.constant.RedisKeyType;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -135,7 +143,7 @@ public class SystemUtils {
             String[] fileNmeReals = fileNmeReal.split("\\.");
             if (fileNmeReals.length > 0) {
                 suffix = "." + fileNmeReals[fileNmeReals.length - 1];
-            }else {
+            } else {
                 return "empty";
             }
             // 获取文件名并转成md5
@@ -156,6 +164,36 @@ public class SystemUtils {
             return browserPath + "/" + fileName + suffix;
         } else {
             return "empty";
+        }
+    }
+
+    /**
+     * 生成校验码（并将字符串存到redis）
+     *
+     * @param request       request
+     * @param response      response
+     * @param redisTemplate redisTemplate
+     * @param producer      producer
+     * @param redisKeyType redis Key类型
+     * @throws IOException IO异常
+     */
+    public static void verifyCodeProduct(HttpServletRequest request, HttpServletResponse response,
+                                  StringRedisTemplate redisTemplate, Producer producer,String redisKeyType) throws IOException {
+        String capText = producer.createText();//创建随机字符串
+        String userIp = SystemUtils.getClientHost(request);//用户ip
+        String redisKey = userIp + redisKeyType;//redis存储key
+        //redis key值用主机+接口类型存储，以防造成相同key
+        redisTemplate.opsForValue().set(redisKey, capText, 10, TimeUnit.MINUTES);
+        //创建验证码
+        BufferedImage bi = producer.createImage(capText);
+        //返回验证码图形给客户端
+        SystemUtils.responseImageSetting(response);
+        ServletOutputStream out = response.getOutputStream();
+        ImageIO.write(bi, "jpg", out);
+        try {
+            out.flush();
+        } finally {
+            out.close();
         }
     }
 }

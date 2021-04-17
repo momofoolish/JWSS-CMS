@@ -4,10 +4,12 @@
 
 <@macros.Base>
     <@macros.Head></@macros.Head>
-    <@macros.Jquery></@macros.Jquery>
     <@encr.EncryptConst></@encr.EncryptConst>
     <@macros.Body>
-        <script type="text/javascript" src="/public/plus/wangEditor.min.js"></script>
+        <link rel="stylesheet" href="/public/css/article/editor.css">
+        <script src="/public/plus/jquery/jquery.js"></script>
+        <script src="/public/plus/wangEditor.min.js"></script>
+        <script src="/public/js/content/editor.js"></script>
 
     <#-- 内容编辑 -->
         <div class="view-editor">
@@ -62,9 +64,6 @@
                 </div>
             </div>
         </div>
-
-        <script type="text/javascript" src="/public/js/content/editor.js"></script>
-        <link rel="stylesheet" href="/public/css/editor.css">
     </@macros.Body>
     <@macros.Foot></@macros.Foot>
 </@macros.Base>
@@ -80,5 +79,5 @@
 <#--弹出层-->
 <@coms.Preview>
     <p id="preMsg" style="overflow: auto;"> 内容 </p>
-    <button id="preBtn" style="width: 91px"> 关闭预览 </button>
+    <button id="preBtn" style="width: 91px"> 关闭预览</button>
 </@coms.Preview>
