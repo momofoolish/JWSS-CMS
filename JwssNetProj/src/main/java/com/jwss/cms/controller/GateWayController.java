@@ -4,21 +4,22 @@ import com.jwss.cms.constant.RedisKeyType;
 import com.jwss.cms.model.article.TbArticle;
 import com.jwss.cms.service.article.ArticleService;
 import com.jwss.cms.service.article.SortService;
-import com.jwss.cms.service.user.OnlineService;
 import com.jwss.cms.util.MyEncrypt;
+import com.jwss.cms.util.StringUtils;
 import com.jwss.cms.util.SystemUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Controller
@@ -65,13 +66,24 @@ public class GateWayController extends BaseController {
     //文章编辑器页面
     @GetMapping("/author/editor")
     public String editor(Model model, HttpServletRequest request) {
-        String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);//生成加密钥匙
-        String host = SystemUtils.getClientHost(request);//获取用户真实IP
-        model.addAttribute("articleSortList", sortService.select(1, 6));//分类列表
-        model.addAttribute("articleList", articleService.select(1, 8));
+        int page = StringUtils.vInteger(request.getParameter("p"));
+        page = page <= 0 ? 1 : page;
+        int total = 5;
+        //生成加密钥匙
+        String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);
+        //获取用户真实IP
+        String host = SystemUtils.getClientHost(request);
+        Map<String, Object> articleMap = new HashMap<>();
+        articleMap.put("articles", articleService.select(page, total));
+        articleMap.put("total", articleService.count() / total);
+        articleMap.put("page", page);
+        //分类列表
+        model.addAttribute("articleSortList", sortService.select(1, 6));
+        model.addAttribute("articleMap", articleMap);
         model.addAttribute("encryptConst", edKey);
         model.addAttribute("nowDate", new Date());
-        redisTemplate.opsForValue().set(host + RedisKeyType.edKey, edKey, 24, TimeUnit.HOURS);//设置redis缓存
+        //设置redis缓存
+        redisTemplate.opsForValue().set(host + RedisKeyType.edKey, edKey, 24, TimeUnit.HOURS);
         renderMenu(model, "文章编辑中心", "/author/editor");
         return "article/editor";
     }
@@ -79,17 +91,7 @@ public class GateWayController extends BaseController {
     //作者中心
     @GetMapping("/author")
     public String author(Model model, @RequestParam(required = false) Integer p) {
-        if (!StringUtils.isEmpty(p)) {
-            if (p > 1) {
-                model.addAttribute("index", p);
-                return "author";
-            }
-            model.addAttribute("index", 1);
-            return "author";
-        } else {
-            model.addAttribute("index", 1);
-            return "author";
-        }
+        return "";
     }
 
     //关于本站
@@ -107,7 +109,7 @@ public class GateWayController extends BaseController {
         }
         model.addAttribute("article", article);
         renderMenu(model, article.getTitle(), "/article/detail?aid=" + aid);
-        return "content/detail";
+        return "article/detail";
     }
 
 

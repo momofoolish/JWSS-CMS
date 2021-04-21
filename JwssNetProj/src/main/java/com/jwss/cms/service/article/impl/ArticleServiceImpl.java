@@ -116,4 +116,9 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
             return 1;
         }
     }
+
+    @Override
+    public int count() {
+        return articleDao.count();
+    }
 }

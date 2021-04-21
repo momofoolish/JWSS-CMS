@@ -5,7 +5,7 @@ window.onload = function () {
     let cover;      //封面
 
     //创建文本编辑器
-    const editor = new wangEditor('#editorDiv');
+    let editor = new wangEditor('#editorDiv');
     editor.config.zIndex = 1;
     editor.config.onchangeTimeout = 500;
     editor.config.uploadImgMaxSize = 3 * 1024 * 1024;
@@ -18,70 +18,75 @@ window.onload = function () {
 
     //提交
     $("#submitBtn").on('click', function () {
+        let inputTitle = $("#inputTitle").val();
+        let selectSort = $("#selectSort").val();
+        let tipText = $("#tipText");
         //判断内容是否为空
-        let warn = "<span style='color: orange;font-size: 28px'>警告</span>";
-        if ($("#inputTitle").val().length < 4 || $("#inputTitle").val().length > 32) {
-            jwssAlert(warn, "标题长度不对", "", "关闭");
+        if (inputTitle.length < 4 || inputTitle.length > 32) {
+            let tip = "<div class=\"alert alert-warning\" role=\"alert\">\n" +
+                "标题长度不对\n" +
+                "</div>";
+            tipText.html(tip);
             return;
         }
         if (content === undefined || content.length < 32) {
-            jwssAlert(warn, "内容过少，至少16个字", "", "关闭");
+            let tip = "<div class=\"alert alert-warning\" role=\"alert\">\n" +
+                "内容过少, 至少16个字\n" +
+                "</div>";
+            tipText.html(tip);
             return;
         }
-        if ($("#selectSort").val() === "分类") {
-            jwssAlert(warn, "请选择分类", "", "关闭");
+        if (selectSort === "分类") {
+            let tip = "<div class=\"alert alert-warning\" role=\"alert\">\n" +
+                "请选择分类\n" +
+                "</div>";
+            tipText.html(tip);
             return;
         }
-
+        //表单数据
         let formData = new FormData();
         formData.append("edKey", encryptConst);
-        formData.append("sort", $("#selectSort").val());
-        formData.append("title", $("#inputTitle").val());
+        formData.append("sort", selectSort);
+        formData.append("title", inputTitle);
         formData.append("content", content);
         formData.append("cover", cover === undefined ? "" : cover);
-        $.ajax({
-            url: '/api/article/author/add',
-            method: 'post',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function (response) {
-                let success = "<span style='color: limegreen;font-size: 28px'>提示</span>";
-                if (response.code === 1) {
-                    jwssAlert(success, response.content, "", "确定");
-                } else {
-                    jwssAlert("提示：", response.content, "", "关闭");
+        //显示上传中
+        let tip = "<div class=\"alert alert-primary\" role=\"alert\">\n" +
+            "提交中...\n" +
+            "</div>";
+        tipText.html(tip);
+        //异步请求
+        setTimeout(() => {
+            $.ajax({
+                url: '/api/article/author/add',
+                method: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.code === 1) {
+                        tip = "<div class=\"alert alert-success\" role=\"alert\">\n" +
+                            response.content + "\n" +
+                            "</div>";
+                    } else {
+                        tip = "<div class=\"alert alert-danger\" role=\"alert\">\n" +
+                            response.content + "\n" +
+                            "</div>";
+                    }
+                    tipText.html(tip);
                 }
-            }
-        });
+            });
+        }, 800);
     });
 
-    //提交
+    //保存
     $("#saveBtn").on('click', function () {
-        //判断内容是否为空
-        let warn = "<span style='color: orange;font-size: 28px'>警告</span>";
-        jwssAlertCallBack(warn, "未开发", "", "关闭", function () {
-            $("#JwssAlert").hide();
-        });
+
     });
 
     //预览
     $("#previewBtn").on('click', function () {
-        let warn = "<span style='color: orange;font-size: 28px'>警告</span>";
-        //判断内容是否为空
-        if (content === undefined || content.length < 32) {
-            jwssAlert(warn, "内容过少，至少16个字", "", "关闭");
-        } else {
-            jwssPreview(content);
-        }
-    });
-
-    //放弃编辑
-    $("#giveUpBtn").on('click', function () {
-        let warn = "<span style='color: orange;font-size: 28px'>确定放弃编辑？</span>";
-        jwssAlertCallBack(warn, "放弃编辑，你将丢失本页面未保存内容。", "", "确定", function () {
-            window.location.href = "/";
-        });
+        $("#previewText").html(content);
     });
 
     //图片上传
@@ -161,44 +166,3 @@ const compressImage = (file, success) => {
     }
 }
 
-// 弹窗使用
-const jwssAlert = (t, c, ti, b) => {
-    $("#pTit").html(t);
-    $("#pMsg").html(c);
-    $("#pTip").html(ti);
-    $("#pBtn").html(b);
-    let jwssAlertEle = $("#JwssAlert");
-    jwssAlertEle.css({'display': 'flex'});
-    jwssAlertEle.show();
-}
-
-// 弹窗使用 回调版本
-const jwssAlertCallBack = (t, c, ti, b, func) => {
-    $("#pTit").html(t);
-    $("#pMsg").html(c);
-    $("#pTip").html(ti);
-    $("#pBtn").html(b);
-    let jwssAlertEle = $("#JwssAlert");
-    jwssAlertEle.css({'display': 'flex'});
-    jwssAlertEle.show();
-    $("#JwssAlert button").on('click', func);
-}
-
-// 预览窗口
-const jwssPreview = (c) => {
-    $("#preMsg").html(c);
-    let jwssPreviewEle = $("#JwssPreview");
-    jwssPreviewEle.css({'display': 'flex'});
-    jwssPreviewEle.show();
-}
-
-// 弹窗按钮事件
-const alertButtonHandle = () => {
-    $("#JwssAlert button").on('click', function () {
-        $("#JwssAlert").hide();
-    });
-
-    $("#JwssPreview button").on('click', function () {
-        $("#JwssPreview").hide();
-    });
-}

@@ -89,4 +89,10 @@ public interface ArticleService {
      * @return 0&1
      */
     int isExist(String name);
+
+    /**
+     * 文章总数
+     * @return 文章总数
+     */
+    int count();
 }
