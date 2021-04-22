@@ -38,14 +38,14 @@
         select
         <include refid="Base_Column_List"/>
         from tb_article
-        order by create_date
+        order by create_date desc
         limit #{total,jdbcType=INTEGER} offset #{index,jdbcType=INTEGER}
     </select>
 
-    <select id="selectByName" resultType="java.lang.String" resultMap="BaseResultMap">
+    <select id="selectByTitle" resultType="java.lang.String" resultMap="BaseResultMap">
     select id
     from tb_article
-    where id = #{name,jdbcType=VARCHAR}
+    where title = #{title,jdbcType=VARCHAR}
   </select>
 
     <!-- 分页查询拓展 -->

@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="/public/css/article/editor.css">
         <script type="text/javascript" src="/public/plus/jquery/jquery.js"></script>
         <script type="text/javascript" src="/public/plus/bootstrap/bootstrap.js"></script>
+        <script type="text/javascript" src="/public/plus/bootstrap/bootstrap-paginator.min.js"></script>
         <script type="text/javascript" src="/public/plus/wangEditor.min.js"></script>
         <script type="text/javascript" src="/public/js/content/editor.js"></script>
 
@@ -19,60 +20,17 @@
         <div class="view-editor">
             <div class="article-list">
                 <#-- 文章列表 -->
-                <ul class="list-group list-group-flush">
+                <ul id="articleListUl" class="list-group list-group-flush">
                     <li class="list-group-item">
                         <a class="list-group-item list-group-item-action active" data-toggle="list"
                            href="javascript:" role="tab" aria-controls="home">
                             <h5>新建文章标题</h5><span>${nowDate?string('yyyy/MM/dd')}</span>
                         </a>
                     </li>
-                    <#list articleMap.articles as article>
-                        <li class="list-group-item">
-                            <a class="list-group-item list-group-item-action" data-toggle="list"
-                               href="javascript:" role="tab" aria-controls="home">
-                                <h5>${article.title}</h5>
-                                <span>
-                                ${article.createDate?string('yyyy/MM/dd')}
-                            </span>
-                            </a>
-                        </li>
-                    </#list>
                 </ul>
                 <#-- 分页 -->
                 <nav aria-label="Page navigation">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item">
-                            <a class="page-link" href="/author/editor?p=${articleMap.page-1}" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        <#list articleMap.page..articleMap.total as index>
-                            <#if index < (5+articleMap.page)>
-                                <li class="page-item">
-                                    <a class="page-link" href="/author/editor?p=${index}">
-                                        ${index}
-                                    </a>
-                                </li>
-                            </#if>
-                        </#list>
-                        <#if (articleMap.total > 5)>
-                            <li>
-                                <a class="page-link" href="javascript:">
-                                    <span aria-hidden="true">...</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="page-link" href="/author/editor?p=${articleMap.total}" aria-label="Next">
-                                    <span aria-hidden="true">${articleMap.total}</span>
-                                </a>
-                            </li>
-                        </#if>
-                        <li>
-                            <a class="page-link" href="/author/editor?p=${articleMap.page+1}" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
+                    <ul id="pagination" class="pagination justify-content-center"></ul>
                 </nav>
             </div>
 

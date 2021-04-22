@@ -52,6 +52,17 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
     }
 
     @Override
+    public Map<String, Object> selectByPage(int page, int total) {
+        Map<String,Object> hashMap = new HashMap<>();
+        if (page > 0) {
+            hashMap.put("currentPage", page);
+            hashMap.put("articleList", articleDao.selectByPage((page - 1) * total, total));
+            hashMap.put("articleTotal", articleDao.count());
+        }
+        return hashMap;
+    }
+
+    @Override
     public TbArticle queryDetail(String aid) {
         return articleDao.selectByPrimaryKey(aid);
     }
@@ -108,12 +119,12 @@ public class ArticleServiceImpl extends BaseServiceImpl implements ArticleServic
     }
 
     @Override
-    public int isExist(String name) {
-        List<TbArticle> articleList = articleDao.selectByName(name);
+    public String isExist(String name) {
+        List<TbArticle> articleList = articleDao.selectByTitle(name);
         if (articleList.size() > 0) {
-            return 0;
+            return articleList.get(0).getId();
         } else {
-            return 1;
+            return "-1";
         }
     }
 

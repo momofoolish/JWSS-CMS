@@ -66,20 +66,12 @@ public class GateWayController extends BaseController {
     //文章编辑器页面
     @GetMapping("/author/editor")
     public String editor(Model model, HttpServletRequest request) {
-        int page = StringUtils.vInteger(request.getParameter("p"));
-        page = page <= 0 ? 1 : page;
-        int total = 5;
         //生成加密钥匙
         String edKey = myEncrypt.encryptPlus(RedisKeyType.edKey);
         //获取用户真实IP
         String host = SystemUtils.getClientHost(request);
-        Map<String, Object> articleMap = new HashMap<>();
-        articleMap.put("articles", articleService.select(page, total));
-        articleMap.put("total", articleService.count() / total);
-        articleMap.put("page", page);
         //分类列表
         model.addAttribute("articleSortList", sortService.select(1, 6));
-        model.addAttribute("articleMap", articleMap);
         model.addAttribute("encryptConst", edKey);
         model.addAttribute("nowDate", new Date());
         //设置redis缓存

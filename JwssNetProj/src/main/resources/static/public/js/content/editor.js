@@ -1,11 +1,11 @@
-window.onload = function () {
-    $("#JwssAlert").hide();
+let editor = null;
 
+window.onload = function () {
     let content;    //文章内容
     let cover;      //封面
 
     //创建文本编辑器
-    let editor = new wangEditor('#editorDiv');
+    editor = new wangEditor('#editorDiv');
     editor.config.zIndex = 1;
     editor.config.onchangeTimeout = 500;
     editor.config.uploadImgMaxSize = 3 * 1024 * 1024;
@@ -100,7 +100,7 @@ window.onload = function () {
         });
     });
 
-    alertButtonHandle();
+    render();
 }
 
 // 压缩图片
@@ -166,3 +166,109 @@ const compressImage = (file, success) => {
     }
 }
 
+//添加左侧选项卡
+const addArticleTab = (id, title, createDate) => {
+    return "    <li class=\"list-group-item\">\n" +
+        "        <a class=\"list-group-item list-group-item-action\" data-toggle=\"list\"\n" +
+        "           href=\"javascript:\" role=\"tab\" aria-controls=\"home\">\n" +
+        "            <h5>" + title + "</h5>\n" +
+        "            <span>\n" +
+        "            " + createDate + "\n" +
+        "            </span>\n" +
+        "            <span id=\"hiddenId\" style=\"display: none\">" + id + "</span>\n" +
+        "        </a>\n" +
+        "    </li>";
+}
+
+//默认左侧选项卡
+const defaultArticleTab = () => {
+    return "<li class=\"list-group-item\">\n" +
+        "                        <a class=\"list-group-item list-group-item-action active\" data-toggle=\"list\"\n" +
+        "                           href=\"javascript:\" role=\"tab\" aria-controls=\"home\">\n" +
+        "                            <h5>新建文章标题</h5><span>" + getNowData() + "</span>\n" +
+        "                        </a>\n" +
+        "                    </li>";
+}
+
+//渲染分页
+const render = (currentPage) => {
+    if (currentPage === null || currentPage === undefined) {
+        currentPage = 1;
+    }
+    let total = 5;
+    $.ajax({
+        url: "/api/article/author/sel?index=" + currentPage + "&total=" + total,
+        success: function (result) {
+            if (result.code === 1) {
+                let res = result.content;
+                let articleUl = $("#articleListUl");
+                //默认选项卡
+                articleUl.html(defaultArticleTab());
+                for (let i = 0; i < res.articleList.length; i++) {
+                    let id = res.articleList[i].id;
+                    let title = res.articleList[i].title;
+                    let createDate = res.articleList[i].createDate;
+                    // 将数据渲染到页面
+                    articleUl.append(addArticleTab(id, title, createDate));
+                }
+                bindTabClick(res.articleList);
+                //设置分页
+                let pageSum = Math.ceil(res.articleTotal / total);
+                setPage(currentPage, pageSum, render);
+            }
+        }
+    });
+}
+
+//设置分页
+const setPage = (currentPage, pageSum) => {
+    $("#pagination").bootstrapPaginator({
+        //设置版本号
+        bootstrapMajorVersion: 3,
+        // 显示第几页
+        currentPage: currentPage,
+        // 总页数
+        totalPages: pageSum,
+        //当单击操作按钮的时候, 执行该函数, 调用ajax渲染页面
+        onPageClicked: function (event, originalEvent, type, page) {
+            // 调用ajax,渲染页面
+            render(page);
+        }
+    })
+}
+
+//绑定Tab事件
+const bindTabClick = (articleList) => {
+    //左侧选项卡单击事件（选择文章进行编辑）
+    $('a[data-toggle="list"]').on('click', function () {
+        // 找到列表id项
+        let articleId = $(this).find('span[id="hiddenId"]').text();
+        let article = null;
+        for (let i = 0; i < articleList.length; i++) {
+            if (articleList[i].id === articleId) {
+                article = articleList[i];
+                break;
+            }
+        }
+        if (article === null) {
+            //新文章
+            editor.txt.html('');
+            $("#inputTitle").val('新建文章');
+            $("#selectSort").val(0);
+        } else {
+            //往编辑器赋值
+            editor.txt.html(article.content);
+            $("#inputTitle").val(article.title);
+            $("#selectSort").val(article.sortId);
+        }
+    });
+}
+
+//获取当前时间
+const getNowData = () => {
+    let Dates = new Date();
+    let Y = Dates.getFullYear();
+    let M = Dates.getMonth() + 1;
+    let D = Dates.getDate();
+    return Y + (M < 10 ? "-0" : "-") + M + (D < 10 ? "-0" : "-") + D;
+}
