@@ -21,17 +21,19 @@
 <#--头部-->
 <#macro Head>
     <link rel="stylesheet" href="/public/css/resource/head.css">
-    <div class="jw-head-out">
-        <ul class="jw-head-inLeft">
+    <div id="headOut">
+        <ul id="headInLeft">
             <#list menuList as menu>
                 <#if menu.col_type==1>
                     <li><a href="${menu.col_url}">${menu.col_name}</a></li>
                 </#if>
             </#list>
         </ul>
-        <ul class="jw-head-inRight">
+        <ul id="headInRight">
             <#if user??>
-                <li><a href="${'/' + user.account}"><img src="${user.avatar}"></a></li>
+                <li><a href="${'/user/info'}">
+                        <img src="${user.avatar}"></a>
+                </li>
                 <#if user.roles=='admin'>
                     <li><a href="/jwss/admin/">后台管理</a></li>
                 </#if>

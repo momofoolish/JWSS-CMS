@@ -12,6 +12,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
@@ -81,9 +82,10 @@ public class GateWayController extends BaseController {
     }
 
     //作者中心
-    @GetMapping("/author")
-    public String author(Model model, @RequestParam(required = false) Integer p) {
-        return "";
+    @GetMapping("/user/info")
+    public String userInfo(Model model) {
+        renderMenu(model, "用户信息中心", "/user/info");
+        return "user/info";
     }
 
     //关于本站

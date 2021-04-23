@@ -50,6 +50,7 @@ class ApiShiroFilters {
         filterCDMap.put("/api/comment/feedback", "roles[user,author]");
         filterCDMap.put("/api/article/author/**", "roles[author,admin]");
         //角色静态资源过滤器
+        filterCDMap.put("/user/**", "roles[user,author,admin]");
         filterCDMap.put("/author/**", "roles[author,admin]");
         filterCDMap.put("/logout", "logout");
         filterCDMap.put("/**", "authc");

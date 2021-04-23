@@ -1,23 +1,25 @@
-ul, li {
+/* ID选择器优先级比类选择器高，为了不让bootstrap覆盖 */
+
+#headOut ul, #headOut li {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-.jw-head-inRight a, .jw-head-inLeft a {
+#headInRight a, #headInLeft a {
     text-decoration: none;
     color: white;
 }
 
-.jw-head-out .jw-head-inLeft a {
+#headOut #headInLeft a {
     padding-left: 1em;
 }
 
-.jw-head-out .jw-head-inRight a {
+#headOut #headInRight a {
     padding-right: 1em;
 }
 
-.jw-head-out {
+#headOut {
     height: 54px;
     display: flex;
     justify-content: space-between;
@@ -26,17 +28,17 @@ ul, li {
     box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 }
 
-.jw-head-inLeft {
+#headInLeft {
     display: flex;
 }
 
-.jw-head-inRight {
+#headInRight {
     display: flex;
     align-items: center;
 }
 
-.jw-head-inRight img {
+#headInRight img {
     width: 36px;
     border-radius: 36px;
-    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075);
 }
