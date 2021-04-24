@@ -108,15 +108,14 @@
 
 
                             </div>
-
                             <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                                 aria-labelledby="v-pills-profile-tab">...
+                                 aria-labelledby="v-pills-profile-tab">拓展页面1
                             </div>
                             <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
-                                 aria-labelledby="v-pills-messages-tab">...
+                                 aria-labelledby="v-pills-messages-tab">拓展页面2
                             </div>
                             <div class="tab-pane fade" id="v-pills-settings" role="tabpanel"
-                                 aria-labelledby="v-pills-settings-tab">...
+                                 aria-labelledby="v-pills-settings-tab">拓展页面3
                             </div>
                         </div>
                     </div>

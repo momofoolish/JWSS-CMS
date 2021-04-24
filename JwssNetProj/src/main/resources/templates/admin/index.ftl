@@ -68,7 +68,13 @@
                         <dd><a href="javascript:">作者申请</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:">访问统计</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:">菜单模块</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:">门户菜单</a></dd>
+                        <dd><a href="javascript:">后台菜单</a></dd>
+                    </dl>
+                </li>
                 <li class="layui-nav-item"><a href="javascript:">数据管理</a></li>
                 <li class="layui-nav-item"><a href="javascript:">版本管理</a></li>
             </ul>

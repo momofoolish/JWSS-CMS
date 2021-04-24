@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface TbMenuDao extends MyBatisBaseDao<TbMenu, String> {
     List<TbMenu> selectAll();
+
+    List<TbMenu> selectByRole(int state);
 }

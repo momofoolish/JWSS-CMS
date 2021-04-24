@@ -25,6 +25,15 @@
     from tb_menu
   </select>
 
+  <!--通过角色查询-->
+  <select id="selectByRole" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_menu
+    where <![CDATA[ col_state <= #{state,jdbcType=INTEGER} ]]>
+    order by col_type
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_menu
     where id = #{id,jdbcType=INTEGER}

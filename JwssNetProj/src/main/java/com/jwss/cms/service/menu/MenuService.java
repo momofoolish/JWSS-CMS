@@ -11,4 +11,13 @@ public interface MenuService {
      * @return 菜单列表
      */
     List<TbMenu> selectAll();
+
+    /**
+     * 根据用户角色查询菜单列表
+     *
+     * @param role 用户角色
+     * @return 菜单列表
+     */
+    List<TbMenu> selectByRole(String role);
+
 }

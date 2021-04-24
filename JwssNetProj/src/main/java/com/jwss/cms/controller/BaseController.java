@@ -31,18 +31,21 @@ public class BaseController {
      * @param model Model
      */
     public boolean renderMenu(@NotNull Model model, String title, String thisPath) {
-        List<TbMenu> menuList = menuService.selectAll();
         TbUser user = onlineService.userInfo();
         boolean login = user != null;
+        List<TbMenu> menuList;
         //没有登录
         if (!login) {
+            menuList = menuService.selectByRole("anon");
             for (TbMenu menu : menuList) {
                 //给登录页面一个参数，用来重定向回改页面
                 if ("登录".equals(menu.getCol_name())) {
                     menu.setCol_url(menu.getCol_url() + "?preUrl=" + thisPath);
                 }
             }
-        }else {
+        } else {
+            String roles = user.getRoles();
+            menuList = menuService.selectByRole(roles);
             model.addAttribute("user", user);
         }
         model.addAttribute("menuList", menuList);

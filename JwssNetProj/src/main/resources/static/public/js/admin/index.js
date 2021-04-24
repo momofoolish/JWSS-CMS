@@ -12,6 +12,8 @@ window.onload = function () {
                 return;
             } else if ("用户模块" === tabName) {
                 return;
+            }else if("菜单模块" === tabName){
+                return ;
             }
             tabAddHandler(element, tabName, tabName);
         });
@@ -34,10 +36,10 @@ function tabAddHandler(element, tabName, id) {
         iframe = "<iframe class='iframe-content' src='/jwss/admin/user/operation'></iframe>";
     } else if ("作者申请" === tabName) {
         iframe = "<iframe class='iframe-content' src='/jwss/admin/user/examine'></iframe>";
-    } else if ("访问统计" === tabName) {
-        iframe = "<iframe class='iframe-content' src='/jwss/admin/count'></iframe>";
-    } else if ("数据管理" === tabName) {
-        iframe = "<iframe class='iframe-content' src='/jwss/admin/dataManager'></iframe>";
+    } else if ("门户菜单" === tabName) {
+        iframe = "<iframe class='iframe-content' src='/jwss/admin/menu/portal'></iframe>";
+    } else if ("后台菜单" === tabName) {
+        iframe = "<iframe class='iframe-content' src='/jwss/admin/menu/back'></iframe>";
     } else if ("版本管理" === tabName) {
         iframe = "<iframe class='iframe-content' src='/jwss/admin/version'></iframe>";
     }
