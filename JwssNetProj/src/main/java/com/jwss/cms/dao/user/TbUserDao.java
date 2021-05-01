@@ -2,7 +2,7 @@ package com.jwss.cms.dao.user;
 
 import com.jwss.cms.dao.MyBatisBaseDao;
 import com.jwss.cms.model.user.TbUser;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * TbUserDao继承基类
  */
-@Repository
+@Mapper
 public interface TbUserDao extends MyBatisBaseDao<TbUser, String> {
     TbUser selectByColName(String colName, String col);
 

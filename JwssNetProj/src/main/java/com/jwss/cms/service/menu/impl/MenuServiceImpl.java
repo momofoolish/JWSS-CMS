@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MenuServiceImpl implements MenuService {
@@ -17,6 +19,21 @@ public class MenuServiceImpl implements MenuService {
 
     @Resource
     private TbMenuDao menuDao;
+
+    @Override
+    public int insert(TbMenu menu) {
+        return menuDao.insert(menu);
+    }
+
+    @Override
+    public int update(TbMenu menu) {
+        return menuDao.updateByPrimaryKeySelective(menu);
+    }
+
+    @Override
+    public int delete(String id) {
+        return menuDao.deleteByPrimaryKey(id);
+    }
 
     @Override
     public List<TbMenu> selectAll() {
@@ -44,6 +61,23 @@ public class MenuServiceImpl implements MenuService {
             }
         }
         return menuList;
+    }
+
+    @Override
+    public List<Map<String, String>> selectByTable(int page, int total, int state, String keyWord) {
+        if (page > 0) {
+            List<Map<String, String>> mapList;
+            mapList = menuDao.selectByTable((page - 1) * total, total, state, keyWord);
+            if (mapList.size() <= 0) {
+                return null;
+            }
+            Map<String, String> countMap = new HashMap<>();
+            //总数
+            countMap.put("total", String.valueOf(menuDao.count()));
+            mapList.add(countMap);
+            return mapList;
+        }
+        return null;
     }
 
 }

@@ -2,7 +2,7 @@ package com.jwss.cms.dao.article;
 
 import com.jwss.cms.dao.MyBatisBaseDao;
 import com.jwss.cms.model.article.TbArticle;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * TbArticleDao继承基类
  */
-@Repository
+@Mapper
 public interface TbArticleDao extends MyBatisBaseDao<TbArticle, String> {
     List<TbArticle> selectByPage(int index, int total);
     List<TbArticle> selectByTitle(String name);

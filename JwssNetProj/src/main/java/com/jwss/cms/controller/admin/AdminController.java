@@ -1,9 +1,7 @@
 package com.jwss.cms.controller.admin;
 
 import com.jwss.cms.service.article.ArticleService;
-import com.jwss.cms.service.comment.CommentService;
 import com.jwss.cms.service.comment.FeedbackService;
-import com.jwss.cms.service.comment.impl.CommentServiceImpl;
 import com.jwss.cms.service.user.OnlineService;
 import com.jwss.cms.service.user.impl.UserServiceImpl;
 import org.springframework.stereotype.Controller;
@@ -17,13 +15,13 @@ import javax.annotation.Resource;
 @RequestMapping("/jwss/admin")
 public class AdminController {
     @Resource
-    ArticleService articleService;
+    private ArticleService articleService;
     @Resource
-    FeedbackService feedbackService;
+    private FeedbackService feedbackService;
     @Resource
-    UserServiceImpl userService;
+    private UserServiceImpl userService;
     @Resource
-    OnlineService onlineService;
+    private OnlineService onlineService;
 
     @GetMapping("")
     public String adminIndex(Model model){
@@ -68,4 +66,9 @@ public class AdminController {
         return "admin/subject/user/examine";
     }
 
+    //菜单管理
+    @GetMapping("/menu/portal")
+    public String portalMenu(){
+        return "/admin/subject/menu/portal";
+    }
 }

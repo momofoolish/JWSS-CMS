@@ -20,7 +20,7 @@ public class QuartzConfig {
                 .forJob("jobDetail_1")
                 .withIdentity("myTrigger")
                 .startNow()
-                .withSchedule(CronScheduleBuilder.cronSchedule("0/3 * * 1 * ? *"))
+                .withSchedule(CronScheduleBuilder.cronSchedule("* * */3 * * ? *"))
                 .build();
     }
 }

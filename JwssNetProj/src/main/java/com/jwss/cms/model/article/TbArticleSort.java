@@ -1,7 +1,6 @@
 package com.jwss.cms.model.article;
 
 import java.io.Serializable;
-import lombok.Data;
 
 /**
  * tb_article_sort

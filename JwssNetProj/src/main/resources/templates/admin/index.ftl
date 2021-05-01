@@ -75,8 +75,13 @@
                         <dd><a href="javascript:">后台菜单</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:">数据管理</a></li>
-                <li class="layui-nav-item"><a href="javascript:">版本管理</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:">广告模块</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:">管理友链</a></dd>
+                        <dd><a href="javascript:">图片轮播</a></dd>
+                    </dl>
+                </li>
             </ul>
         </div>
     </div>

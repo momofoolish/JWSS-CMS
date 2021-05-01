@@ -12,8 +12,10 @@ window.onload = function () {
                 return;
             } else if ("用户模块" === tabName) {
                 return;
-            }else if("菜单模块" === tabName){
-                return ;
+            } else if ("菜单模块" === tabName) {
+                return;
+            } else if ("广告模块" === tabName) {
+                return;
             }
             tabAddHandler(element, tabName, tabName);
         });
@@ -40,8 +42,10 @@ function tabAddHandler(element, tabName, id) {
         iframe = "<iframe class='iframe-content' src='/jwss/admin/menu/portal'></iframe>";
     } else if ("后台菜单" === tabName) {
         iframe = "<iframe class='iframe-content' src='/jwss/admin/menu/back'></iframe>";
-    } else if ("版本管理" === tabName) {
-        iframe = "<iframe class='iframe-content' src='/jwss/admin/version'></iframe>";
+    } else if ("管理友链" === tabName) {
+        iframe = "<iframe class='iframe-content' src='/jwss/admin/friends'></iframe>";
+    } else if ("图片轮播" === tabName) {
+        iframe = "<iframe class='iframe-content' src='/jwss/admin/pic'></iframe>";
     }
 
     element.tabDelete(tabFilter, tabName);
